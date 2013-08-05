@@ -37,6 +37,7 @@ Usage
       data-name="auto|fixed_name"
       data-sizerule="strict|proportion|free"
       data-formats="all|jpg,png,gif"
+      data-text="message"
 />
 ```
 
@@ -95,6 +96,10 @@ Example :
 ```jpg,png,gif : Allow only image of certain format separeted by commas```
 
 ```all : Allow every format```
+
+**data-text** : _(optional, default : "")_ 
+
+```if set, override the default text displayed in the bottom```
 
 
 What it looks like
