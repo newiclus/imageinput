@@ -1,0 +1,35 @@
+#wrapper {
+    margin: 20px auto 0;
+    width: 800px;    
+}
+
+.imageinput {display: none;}
+
+.upload-item {
+    margin: 0;
+    margin-bottom: 20px;}
+
+    .upload-item a {
+        background-color: #EFEFEF;
+        cursor: pointer;
+        display: block;
+    }
+
+    .upload-item a:hover {background-color: #E7E7E7;}
+
+    .upload-item input {
+        visibility: hidden;
+    }
+
+    .upload-item p {
+        color: #a9a9a9;
+        font: 700 1.5em helvetica, sans-serif;
+        margin: 0;
+        padding: 10px;
+        text-align: center;
+    }
+
+    .upload-item p cite {
+        font-style: normal;
+        font-weight: lighter;        
+    }
