@@ -1,7 +1,6 @@
 #wrapper {
     margin: 20px auto 0;
-    width: 800px;    
-}
+    width: 800px; }
 
 .imageinput {display: none;}
 
@@ -12,24 +11,22 @@
     .upload-item a {
         background-color: #EFEFEF;
         cursor: pointer;
-        display: block;
-    }
+        display: block; 
+        overflow: hidden; }
 
-    .upload-item a:hover {background-color: #E7E7E7;}
+    .upload-item a:hover { background-color: #E7E7E7; }
 
-    .upload-item input {
-        visibility: hidden;
-    }
+    .upload-item a.link-upload img { max-width: 100%; }
+
+    .upload-item input { visibility: hidden; }
 
     .upload-item p {
         color: #a9a9a9;
         font: 700 1.5em helvetica, sans-serif;
         margin: 0;
         padding: 10px;
-        text-align: center;
-    }
+        text-align: center; }
 
     .upload-item p cite {
         font-style: normal;
-        font-weight: lighter;        
-    }
+        font-weight: lighter; }
