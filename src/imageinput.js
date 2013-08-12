@@ -15,26 +15,7 @@
 
 */
 
-var imageInput = function imageInput () {
-    'use strict';
-    init : function() {
 
-    },
-
-    defaults : {
-        image_dir  : 'www/public',   // absolute path to the directory
-        upload_msg : 'Click to Upload',
-        img_width  : 300,
-        img_height : 180,
-        thumbnail_height : "",
-        preview_height   : 180,
-        img_name   : "auto",
-        img_path   : "/",
-        img_rule   : "free",
-        img_format : "image/jpeg,image/png,image/gif"
-    }
-
-}
 
 (function () {
     'use strict';
