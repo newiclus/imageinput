@@ -11,6 +11,8 @@ class Images
 
 	function upload($name,$options=array())
 	{
+
+		// var_dump($options);
 		
 		$this->opt = array_merge($this->opt, $options);
 
