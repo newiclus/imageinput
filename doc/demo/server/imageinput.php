@@ -2,15 +2,15 @@
 require("lib/Images.php");
 
 
-$_POST['width']            = 223;
-$_POST['height']           = 118;
+// $_POST['width']            = 223;
+// $_POST['height']           = 118;
 
-$_POST['thumbnail-height'] = "100";
-$_POST['preview-height']   = "50";
-$_POST['path']             = "imagenes/prueba";
-$_POST['name']             = "auto"; //auto|fixed_name
-$_POST['sizerule']         = "strict"; //strict|proportion|free
-$_POST['formats']          = "all"; //all|jpg,png,gif
+// $_POST['thumbnail-height'] = "100";
+// $_POST['preview-height']   = "50";
+// $_POST['path']             = "imagenes/prueba";
+// $_POST['name']             = "auto"; //auto|fixed_name
+// $_POST['sizerule']         = "strict"; //strict|proportion|free
+// $_POST['formats']          = "all"; //all|jpg,png,gif
 // $_POST['text']          = "message";
 
 
@@ -25,5 +25,6 @@ $FOTOS->upload('file',array(
 	'sizerule'         =>$_POST['sizerule'],
 	'formats'          =>$_POST['formats'],
 ));
+
 
 
