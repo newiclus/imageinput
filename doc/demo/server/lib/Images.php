@@ -11,8 +11,6 @@ class Images
 
 	function upload($name,$options=array())
 	{
-
-		// var_dump($options);
 		
 		$this->opt = array_merge($this->opt, $options);
 
@@ -28,10 +26,11 @@ class Images
 		if(substr($this->opt['name'],-4,4)!=".".$this->opt['extension'])
 			$this->opt['name']=$this->opt['name'].".".$this->opt['extension'];
 
+		//fixing extention
 		$this->opt['path'] = str_replace("//","/",$this->opt['path']."/");
-
 		$this->opt['path'] = ($this->opt['path']=="/")?"":$this->opt['path'];
 
+		//get file dest
     	$this->opt['dest'] =$this->opt['path'].$this->opt['name'];
 
     	$validate=$this->validate();
@@ -169,15 +168,15 @@ class Images
 
 	    if($this->opt['extension']=="jpg")
 			
-	    	if(!@imagecreatefromjpeg($this->opt['file_temp'])) return "error reading jpg file";
+	    	if(!@imagecreatefromjpeg($this->opt['file_temp'])) return "Error reading jpg file";
 
 	    elseif($this->opt['extension']=="gif")
 
-	    	if(!@imagecreatefromgif($this->opt['file_temp'])) return "error reading gif file";
+	    	if(!@imagecreatefromgif($this->opt['file_temp'])) return "Error reading gif file";
 
 	    elseif($this->opt['extension']=="png")
 
-	    	if(!@imagecreatefrompng($this->opt['file_temp'])) return "error reading png file";	 
+	    	if(!@imagecreatefrompng($this->opt['file_temp'])) return "Error reading png file";	 
 				
 	    else 
 	    	return "Invalid extension";
