@@ -55,6 +55,14 @@ class Images
 				return $copying;
 		}
 
+        if($this->opt['sizerule'] == 'proportion')
+        {
+			$coyping=$this->reduce($this->opt['height'],"","dest");
+			if($coyping!=1)
+				return $copying;
+
+        }
+
 		return TRUE;
 
 	}
