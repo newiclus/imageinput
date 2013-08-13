@@ -306,7 +306,7 @@
             var id    = this.parentNode.getAttribute('target'),
                 frame = document.getElementById(id);
 
-            frame.setAttribute('onLoad', 'callbackData();');
+            frame.setAttribute('onLoad', 'callbackData('+ id +');');
             this.form.submit();
         }
     };   //*/
@@ -317,8 +317,12 @@
 
 
 /* Return callback data from server */
-function callbackData() {
-    console.log('text');
+function callbackData( iframe ) {
+    
+    var id = this.parentNode.getAttribute(iframe);
+    var respon = id.contentWindow.document.body?io.contentWindow.document.body.innerHTML:null;
+
+    console.log(respon);
 }
 
 
