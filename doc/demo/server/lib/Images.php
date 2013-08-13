@@ -9,11 +9,6 @@ class Images
 {
 	var $opt=array();
 
-	function __construct()
-	{
-
-	}
-
 	function upload($name,$options=array())
 	{
 		
@@ -23,6 +18,7 @@ class Images
 		// $file_type              = $_FILES[$name]['type'];
 		$this->opt['file_temp']    = $_FILES[$name]['tmp_name']; 
 		
+		//getting extention
 		$ext = explode(".",$_FILES[$name]['name']);
 		$this->opt['extension']    = strtolower($ext[sizeof($ext)-1]);
 
@@ -32,24 +28,31 @@ class Images
 
 		$this->opt['path'] = str_replace("//","/",$this->opt['path']."/");
 
+		$this->opt['path'] = ($this->opt['path']=="/")?"":$this->opt['path'];
+
     	$this->opt['dest'] =$this->opt['path'].$this->opt['name'];
 
-
-		if(!($validate=$this->validate()))
+    	$validate=$this->validate();
+		if($validate!=1)
 			return $validate;
 
 		if(!($coyping=$this->store()))
-			return $copying;
+		return $copying;
 
 
 		if(!empty($this->opt['thumbnail_height']))
-			if(!($coyping=$this->mini($this->opt['thumbnail_height'],"_thumbnail")))
+		{
+			$coyping=$this->reduce($this->opt['thumbnail_height'],"_thumbnail","thumbnail");
+			if($coyping!=1)
 				return $copying;
-
+		}
 
 		if(!empty($this->opt['preview_height']))
-			if(!($coyping=$this->mini($this->opt['preview_height'],"_preview")))
+		{
+			$coyping=$this->reduce($this->opt['preview_height'],"_preview","preview");
+			if($coyping!=1)
 				return $copying;
+		}
 
 		return TRUE;
 
@@ -60,10 +63,20 @@ class Images
 		return $this->opt['dest'];
 	}
 
+	function file_preview()
+	{
+		return $this->opt['preview'];
+	}
+
+	function file_thumbnail()
+	{
+		return $this->opt['thumbnail'];
+	}		
+
+
 	function store()
 	{
 
-		// var_dump($this->opt);
         if (is_uploaded_file($this->opt['file_temp']))
         {	
 
@@ -71,13 +84,12 @@ class Images
         		return "copying error";
         	
         	return TRUE;
-        	// var_dump($_SERVER);
-        	// var_dump(getcwd());
+
         }
 
 	}
 
-	function mini($height,$subfij)
+	function reduce($height,$subfij)
 	{
 
 		$file_dest=str_replace(".".$this->opt['extension'],$subfij.".".$this->opt['extension'],$this->opt['dest']);
@@ -86,29 +98,30 @@ class Images
 
 		$quality=90;
 
+		$reduced=FALSE;
+
 		switch($this->opt['extension'])
 		{
 		    case "jpg":
-		        // $img = imagecreatefromjpeg($this->opt['dest']);
-				// crear papel de imágen, ImageCreateTrueColor para no perder colores
+
 				$miniature = ImageCreateTrueColor($width, $height);
-				// imprimir la imagen redimensionada
+
 				imagecopyresampled($miniature,$this->opt['img'],0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
-				// guardar la imagen como $file_dest
-		        $bool = imagejpeg($miniature,$file_dest,$quality);
+
+		        $reduced = imagejpeg($miniature,$file_dest,$quality);
+
 		    break;
 		    case "gif":
-		        // $img = imagecreatefromgif($this->opt['dest']);
-				// crear papel de imágen, ImageCreateTrueColor para no perder colores
+
 				$miniature = ImageCreateTrueColor($width, $height);
-				// imprimir la imagen redimensionada
+
 				imagecopyresampled($miniature,$this->opt['img'],0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
-				// guardar la imagen como $file_dest
-		        $bool = imagegif($miniature,$file_dest,$quality);
+
+		        $reduced = imagegif($miniature,$file_dest,$quality);
+
 	        break;
 		    case "png":
-		        // $img = imagecreatefrompng($this->opt['dest']);
-				// crear papel de imágen, ImageCreateTrueColor para no perder colores
+
 				$miniature = ImageCreateTrueColor($width, $height);
 
 				imagealphablending($miniature, false);
@@ -117,18 +130,16 @@ class Images
 				imagesavealpha($miniature, true);
 
 				imagecopyresampled($miniature,$this->opt['img'],0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
-				// guardar la imagen como $file_dest
-		        $bool = imagepng($miniature,$file_dest);
-	//	        imagepng($miniature,$file_dest);
+
+		        $reduced = imagepng($miniature,$file_dest);
+
 	        break;
 		}
 
-    	if(!$bool)
-    		echo "minimizing $subfij error";
+    	if(!$reduced)
+    		echo "Error minimizing the $subfij file";
     	
     	return TRUE;
-    	// var_dump($_SERVER);
-    	// var_dump(getcwd());
 
 	}	
 
@@ -142,24 +153,24 @@ class Images
 
 			if(!(in_array($this->opt['extension'],$this->opt['formats_array'])))
 
-				return "the extension must be ".str_replace(","," or ",$this->opt['formats']);
+				return "The file extension must be ".str_replace(","," or ",$this->opt['formats']);
 
 		}		
 
 	    if($this->opt['extension']=="jpg")
 			
-	    	if(!@$this->opt['img']=imagecreatefromjpeg($this->opt['file_temp'])) return "error jpg";
+	    	if(!@$this->opt['img']=imagecreatefromjpeg($this->opt['file_temp'])) return "error reading jpg file";
 
 	    elseif($this->opt['extension']=="gif")
 
-	    	if(!@$this->opt['img']=imagecreatefromgif($this->opt['file_temp'])) return "error gif";
+	    	if(!@$this->opt['img']=imagecreatefromgif($this->opt['file_temp'])) return "error reading gif file";
 
 	    elseif($this->opt['extension']=="png")
 
-	    	if(!@$this->opt['img']=imagecreatefrompng($this->opt['file_temp'])) return "error png";	 
+	    	if(!@$this->opt['img']=imagecreatefrompng($this->opt['file_temp'])) return "error reading png file";	 
 				
 	    else 
-	    	return "invalid extension";
+	    	return "Invalid extension";
 
 
 	    //validating sizerule
@@ -171,13 +182,13 @@ class Images
 
 				if(!($this->opt['img_w']==$this->opt['width'] and $this->opt['img_h']=$this->opt['height'] ))
 
-					return "Image must be strict ".$this->opt['width']."x".$this->opt['height'];
+					return "The dimensions of the image should be strictly ".$this->opt['width']."x".$this->opt['height'];
 
 			if($this->opt['sizerule'] == 'proportion')
 
 				if(!($this->opt['img_w']/$this->opt['img_h']==$this->opt['width']/$this->opt['height'] ))
 
-					return "Image must be proportion of ".$this->opt['width']."x".$this->opt['height'];
+					return "The image must have the proportions ".$this->opt['width']."x".$this->opt['height'];
 
 		}
 
