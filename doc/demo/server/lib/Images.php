@@ -91,12 +91,14 @@ class Images
 
 	}
 
-	function reduce($height,$subfij)
+	function reduce($height,$subfij,$index)
 	{
 
 		$file_dest=str_replace(".".$this->opt['extension'],$subfij.".".$this->opt['extension'],$this->opt['dest']);
 
 		$width=intval($height*($this->opt['img_w']/$this->opt['img_h']));
+
+		$this->opt[$index]=$file_dest;
 
 		$quality=90;
 
