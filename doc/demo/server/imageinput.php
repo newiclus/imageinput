@@ -30,10 +30,18 @@ $options['formats']			=(isset($_POST['formats']))?$_POST['formats']:'all';
 $FOTOS= new Images();
 $msg=$FOTOS->upload('file',$options);
 
-echo "<!DOCTYPE html><html><body><script>";
-// echo "function successImage(msg){ alert('success: '+msg); }";
-// echo "function errorImage(msg){ alert('error: '+msg); }";
-echo "parent.";
-echo ($msg==1)?"successImage('".$FOTOS->file()."','".$FOTOS->file_preview()."');":"errorImage('".$msg."');";
-echo "</script></body></html>";
+if(($msg==1))
+	$json=array('status'=>'success','file'=>$FOTOS->file(),'preview'=>$FOTOS->file_preview());
+else
+	$json=array('status'=>'error','msg'=>$msg);
+
+echo json_encode($json);
+
+
+// echo "<!DOCTYPE html><html><body><script>";
+// // echo "function successImage(msg){ alert('success: '+msg); }";
+// // echo "function errorImage(msg){ alert('error: '+msg); }";
+// echo "parent.";
+// echo ($msg==1)?"successImage('".$FOTOS->file()."','".$FOTOS->file_preview()."');":"errorImage('".$msg."');";
+// echo "</script></body></html>";
 
