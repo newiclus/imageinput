@@ -7,101 +7,171 @@
 */
 class Images
 {
-	var $extension;
-	var $size;
-	var $type;
-	var $formats;
-	var $width;
-	var $height;
-	var $path;
-
-	var $thumbnail_height;
-	var $preview_height;
+	var $opt=array();
 
 	function __construct()
 	{
 
 	}
 
-	function upload($name)
+	function upload($name,$options=array())
 	{
-
-		$_POST['width']         = 223;
-		$_POST['height']        = 118;
-
-		$_POST['thumbnail-height'] = "100";
-		$_POST['preview-height']   = "150";
-		$_POST['path']             = "/";
-		$_POST['name']             = "auto"; //auto|fixed_name
-		$_POST['sizerule']         = "strict"; //strict|proportion|free
-		$_POST['formats']          = "all"; //all|jpg,png,gif
-		// $_POST['text']          = "message";
 		
+		$this->opt = array_merge($this->opt, $options);
 
-		$this->width               = $_POST['width'];
-		$this->height              = $_POST['height'];			
-		$this->thumbnail_height    = $_POST['thumbnail-height'];
-		$this->preview_height      = $_POST['preview-height'];
-		$this->path                = $_POST['path'];
-		$this->name                = $_POST['name'];
-		$this->sizerule            = $_POST['sizerule'];
-
-		$this->formats             = $_POST['formats'];
-		
 		// $file_size              = $_FILES[$name]['size'];
 		// $file_type              = $_FILES[$name]['type'];
-		$this->file_temp           = $_FILES[$name]['tmp_name']; 
+		$this->opt['file_temp']    = $_FILES[$name]['tmp_name']; 
 		
-		$exA = explode(".",$_FILES[$name]['name']);
-		$this->extension           = strtolower($exA[sizeof($exA)-1]);
+		$ext = explode(".",$_FILES[$name]['name']);
+		$this->opt['extension']    = strtolower($ext[sizeof($ext)-1]);
 
-		echo $this->validate();
+
+		if(substr($this->opt['name'],-4,4)!=".".$this->opt['extension'])
+			$this->opt['name']=$this->opt['name'].".".$this->opt['extension'];
+
+		$this->opt['path'] = str_replace("//","/",$this->opt['path']."/");
+
+    	$this->opt['dest'] =$this->opt['path'].$this->opt['name'];
+
+
+		if(!($validate=$this->validate()))
+			return $validate;
+
+		if(!($coyping=$this->store()))
+			return $copying;
+
+
+		if(!empty($this->opt['thumbnail_height']))
+			if(!($coyping=$this->mini($this->opt['thumbnail_height'],"_thumbnail")))
+				return $copying;
+
+
+		if(!empty($this->opt['preview_height']))
+			if(!($coyping=$this->mini($this->opt['preview_height'],"_preview")))
+				return $copying;
+
+
 
 	}
 
-	function validate(){
+	function store(){
 
-		if(!($this->formats == 'all')){
+		// var_dump($this->opt);
+        if (is_uploaded_file($this->opt['file_temp']))
+        {	
+
+        	if(!copy($this->opt['file_temp'], $this->opt['dest']))
+        		return "copying error";
+        	
+        	return TRUE;
+        	// var_dump($_SERVER);
+        	// var_dump(getcwd());
+        }
+
+	}
+
+	function mini($height,$subfij)
+	{
+		
+		$file_dest=str_replace(".".$this->opt['extension'],$subfij.".".$this->opt['extension'],$this->opt['dest']);
+
+		$width=intval($height*($this->opt['img_w']/$this->opt['img_h']));
+
+		$quality=90;
+
+		switch($this->opt['extension'])
+		{
+		    case "jpg":
+		        $img = imagecreatefromjpeg($this->opt['dest']);
+				// crear papel de imágen, ImageCreateTrueColor para no perder colores
+				$miniature = ImageCreateTrueColor($width, $height);
+				// imprimir la imagen redimensionada
+				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				// guardar la imagen como $file_dest
+		        $bool = imagejpeg($miniature,$file_dest,$quality);
+		    break;
+		    case "gif":
+		        $img = imagecreatefromgif($this->opt['dest']);
+				// crear papel de imágen, ImageCreateTrueColor para no perder colores
+				$miniature = ImageCreateTrueColor($width, $height);
+				// imprimir la imagen redimensionada
+				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				// guardar la imagen como $file_dest
+		        $bool = imagegif($miniature,$file_dest,$quality);
+	        break;
+		    case "png":
+		        $img = imagecreatefrompng($this->opt['dest']);
+				// crear papel de imágen, ImageCreateTrueColor para no perder colores
+				$miniature = ImageCreateTrueColor($width, $height);
+
+				imagealphablending($miniature, false);
+				$colorTransparent = imagecolorallocatealpha($miniature, 0, 0, 0, 127);
+				imagefill($miniature, 0, 0, $colorTransparent);
+				imagesavealpha($miniature, true);
+
+				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				// guardar la imagen como $file_dest
+		        $bool = imagepng($miniature,$file_dest);
+	//	        imagepng($miniature,$file_dest);
+	        break;
+		}
+
+    	if(!$bool)
+    		echo "minimizing $subfij error";
+    	
+    	// return TRUE;
+    	// var_dump($_SERVER);
+    	// var_dump(getcwd());
+
+	}	
+
+	function validate()
+	{
+
+		//validating formats
+		if(!($this->opt['formats'] == 'all')){
 			
-			$this->formats_array = explode(",",$this->formats);
+			$this->opt['formats_array'] = explode(",",$this->opt['formats']);
 
-			if(!(in_array($this->extension,$this->formats_array)))
+			if(!(in_array($this->opt['extension'],$this->opt['formats_array'])))
 
-				return "the extension must be ".str_replace(","," or ",$this->formats);
+				return "the extension must be ".str_replace(","," or ",$this->opt['formats']);
 
 		}		
 
-	    if($this->extension=="jpg")
+	    if($this->opt['extension']=="jpg")
 			
-	    	if(!@imagecreatefromjpeg($this->file_temp)) return "error jpg";
+	    	if(!@imagecreatefromjpeg($this->opt['file_temp'])) return "error jpg";
 
-	    elseif($this->extension=="gif")
+	    elseif($this->opt['extension']=="gif")
 
-	    	if(!@imagecreatefromgif($this->file_temp)) return "error gif";
+	    	if(!@imagecreatefromgif($this->opt['file_temp'])) return "error gif";
 
-	    elseif($this->extension=="png")
+	    elseif($this->opt['extension']=="png")
 
-	    	if(!@imagecreatefrompng($this->file_temp)) return "error png";	 
+	    	if(!@imagecreatefrompng($this->opt['file_temp'])) return "error png";	 
 				
 	    else 
 	    	return "invalid extension";
 
 
-		list($this->img_w, $this->img_h, $tipo, $atr) = getimagesize($this->file_temp);
+	    //validating sizerule
+		list($this->opt['img_w'], $this->opt['img_h'], $tipo, $atr) = getimagesize($this->opt['file_temp']);
 	
-		if(!($this->sizerule == 'free')){
+		if(!($this->opt['sizerule'] == 'free')){
 
-			if($this->sizerule == 'strict')
+			if($this->opt['sizerule'] == 'strict')
 
-				if(!($this->img_w==$this->width and $this->img_h=$this->height ))
+				if(!($this->opt['img_w']==$this->opt['width'] and $this->opt['img_h']=$this->opt['height'] ))
 
-					return "Image must be strict ".$this->width."x".$this->height;
+					return "Image must be strict ".$this->opt['width']."x".$this->opt['height'];
 
-			if($this->sizerule == 'proportion')
+			if($this->opt['sizerule'] == 'proportion')
 
-				if(!($this->img_w/$this->img_h==$this->width/$this->height ))
+				if(!($this->opt['img_w']/$this->opt['img_h']==$this->opt['width']/$this->opt['height'] ))
 
-					return "Image must be proportion of ".$this->width."x".$this->height;
+					return "Image must be proportion of ".$this->opt['width']."x".$this->opt['height'];
 
 		}
 
