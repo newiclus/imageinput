@@ -1,4 +1,7 @@
 <?php 
+
+error_reporting(E_ALL);
+
 require("lib/Images.php");
 
 // var_dump($_POST);
