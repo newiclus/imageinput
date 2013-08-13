@@ -307,7 +307,7 @@
             var id    = this.parentNode.getAttribute('target'),
                 frame = document.getElementById(id);
 
-            frame.setAttribute('onLoad', 'callbackData('+ id +');');
+            frame.setAttribute('onLoad', 'callbackData(this);');
             this.form.submit();
         }
     };   //*/
@@ -323,7 +323,7 @@ function callbackData( id ) {
     //var id = document.getElementById(iframe);
     //var respon = id.contentWindow.document.body?io.contentWindow.document.body.innerHTML:null;
 
-    console.log(this);
+    console.log( id );
 }
 
 
