@@ -28,11 +28,11 @@
         iframes = [],   /* Array form - iframe */
 
         /*  TagNode   */
-        div  = document.createElement('div'),   /* Wrapper forms */
+        div   = document.createElement('div'),   /* Wrapper forms */
         iframe = document.createElement('iframe'),   /* Wrapper forms */
         form  = document.createElement('form'),   /* forms */
         file  = document.createElement('input'),   /* Create Input File */
-        text  = document.createElement('p'),   /* Create P tagNode */ 
+        text  = document.createElement('p'),   /* Create P tagNode */         
         a     = document.createElement('a');
            
     
@@ -49,7 +49,7 @@
     a.className     = 'link-upload'; 
     file.className  = 'input-file';
     text.className  = "text-upload";
-    iframe.className = "iframe-upload";
+    iframe.className = "iframe-upload";    
 
     /* Div wrapper for form and iframe */
     var resp    = div.cloneNode(true);
@@ -215,7 +215,7 @@
     /* Constructor Iframe */
     function addIframe(id) {
         iframe.setAttribute('name', 'iframe_upload_'+id);
-        //iframe.setAttribute('onLoad', 'console.log("Test "+id)');
+        iframe.setAttribute('data-callback', 'upload_'+id);
         iframe.id = 'iframe_upload_'+id;
 
         /* return node */
@@ -317,20 +317,39 @@
 })();
 
 
-/* Return callback data from server */
+/* Callback data from server */
 function callbackData( id ) {   
     
-    var respon = id.contentWindow.document.body ? id.contentWindow.document.body.innerHTML : null;
+    var responseText;
 
-    console.log( respon );
+    if( id.contentWindow ) {
+         responseText = id.contentWindow.document.body ? JSON.parse(id.contentWindow.document.body.innerHTML) : null;
+         
+    } else if(id.contentDocument) {
+        responseText = id.contentDocument.document.body ? JSON.parse(id.contentDocument.document.body.innerHTML) : null;       
+    }   
+
+    var block = id.getAttribute('data-callback'),
+        retur = document.getElementById(block),
+        returnBlock = retur.querySelector(".link-upload");
+
+    var p = document.createElement('p');
+        p.className = 'msgError';
+
+    var img = document.createElement('img');   /* Create Image tagNode */ 
+        img.className = 'img-preview';
+
+    if ( responseText.status === 'success' ) {
+        img.src = 'server/'+responseText.preview;
+        
+        returnBlock.appendChild(img);
+
+    } else {
+        returnBlock.appendChild( p.innerHTML = responseText.msg );
+    }
+        
+    
 }   // */
-
-
-function successImage (original, preview) {
-    console.log(original);
-    console.log(preview);
-}
-
 
 
 /* Document Ready ?  */
