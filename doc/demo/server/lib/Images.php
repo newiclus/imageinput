@@ -28,6 +28,8 @@ class Images
 
 		$this->opt['path'] = str_replace("//","/",$this->opt['path']."/");
 
+		$this->opt['path'] = ($this->opt['path']=="/")?"":$this->opt['path'];
+
     	$this->opt['dest'] =$this->opt['path'].$this->opt['name'];
 
     	$validate=$this->validate();
@@ -70,6 +72,7 @@ class Images
 	{
 		return $this->opt['thumbnail'];
 	}		
+
 
 	function store()
 	{
