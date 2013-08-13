@@ -51,11 +51,17 @@ class Images
 			if(!($coyping=$this->mini($this->opt['preview_height'],"_preview")))
 				return $copying;
 
-
+		return TRUE;
 
 	}
 
-	function store(){
+	function file()
+	{
+		return $this->opt['dest'];
+	}
+
+	function store()
+	{
 
 		// var_dump($this->opt);
         if (is_uploaded_file($this->opt['file_temp']))
@@ -73,7 +79,7 @@ class Images
 
 	function mini($height,$subfij)
 	{
-		
+
 		$file_dest=str_replace(".".$this->opt['extension'],$subfij.".".$this->opt['extension'],$this->opt['dest']);
 
 		$width=intval($height*($this->opt['img_w']/$this->opt['img_h']));
@@ -83,25 +89,25 @@ class Images
 		switch($this->opt['extension'])
 		{
 		    case "jpg":
-		        $img = imagecreatefromjpeg($this->opt['dest']);
+		        // $img = imagecreatefromjpeg($this->opt['dest']);
 				// crear papel de imágen, ImageCreateTrueColor para no perder colores
 				$miniature = ImageCreateTrueColor($width, $height);
 				// imprimir la imagen redimensionada
-				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				imagecopyresampled($miniature,$this->opt['img'],0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 				// guardar la imagen como $file_dest
 		        $bool = imagejpeg($miniature,$file_dest,$quality);
 		    break;
 		    case "gif":
-		        $img = imagecreatefromgif($this->opt['dest']);
+		        // $img = imagecreatefromgif($this->opt['dest']);
 				// crear papel de imágen, ImageCreateTrueColor para no perder colores
 				$miniature = ImageCreateTrueColor($width, $height);
 				// imprimir la imagen redimensionada
-				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				imagecopyresampled($miniature,$this->opt['img'],0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 				// guardar la imagen como $file_dest
 		        $bool = imagegif($miniature,$file_dest,$quality);
 	        break;
 		    case "png":
-		        $img = imagecreatefrompng($this->opt['dest']);
+		        // $img = imagecreatefrompng($this->opt['dest']);
 				// crear papel de imágen, ImageCreateTrueColor para no perder colores
 				$miniature = ImageCreateTrueColor($width, $height);
 
@@ -110,7 +116,7 @@ class Images
 				imagefill($miniature, 0, 0, $colorTransparent);
 				imagesavealpha($miniature, true);
 
-				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				imagecopyresampled($miniature,$this->opt['img'],0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 				// guardar la imagen como $file_dest
 		        $bool = imagepng($miniature,$file_dest);
 	//	        imagepng($miniature,$file_dest);
@@ -120,7 +126,7 @@ class Images
     	if(!$bool)
     		echo "minimizing $subfij error";
     	
-    	// return TRUE;
+    	return TRUE;
     	// var_dump($_SERVER);
     	// var_dump(getcwd());
 
@@ -142,15 +148,15 @@ class Images
 
 	    if($this->opt['extension']=="jpg")
 			
-	    	if(!@imagecreatefromjpeg($this->opt['file_temp'])) return "error jpg";
+	    	if(!@$this->opt['img']=imagecreatefromjpeg($this->opt['file_temp'])) return "error jpg";
 
 	    elseif($this->opt['extension']=="gif")
 
-	    	if(!@imagecreatefromgif($this->opt['file_temp'])) return "error gif";
+	    	if(!@$this->opt['img']=imagecreatefromgif($this->opt['file_temp'])) return "error gif";
 
 	    elseif($this->opt['extension']=="png")
 
-	    	if(!@imagecreatefrompng($this->opt['file_temp'])) return "error png";	 
+	    	if(!@$this->opt['img']=imagecreatefrompng($this->opt['file_temp'])) return "error png";	 
 				
 	    else 
 	    	return "invalid extension";
