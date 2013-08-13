@@ -318,14 +318,18 @@
 
 
 /* Return callback data from server */
-function callbackData( id ) {
+function callbackData( id ) {   
     
-    //var id = document.getElementById(iframe);
-    //var respon = id.contentWindow.document.body?io.contentWindow.document.body.innerHTML:null;
+    var respon = id.contentWindow.document.body ? id.contentWindow.document.body.innerHTML : null;
 
-    console.log( id );
+    console.log( respon );
+}   // */
+
+
+function successImage (original, preview) {
+    console.log(original);
+    console.log(preview);
 }
-
 
 
 
