@@ -139,10 +139,11 @@
                     var value = result === 'strict' ? 'strict' :
                                 result === 'proportion' ? 'proportion' :
                                 result === 'free' ? 'free' :
-                                defaults.img_format;
+                                defaults.img_rule;
                     return value;
                 } else
-                    return defaults.img_format;
+                    return result;
+
             break;
 
             case 'data-formats':
@@ -317,12 +318,12 @@
 
 
 /* Return callback data from server */
-function callbackData( iframe ) {
+function callbackData( id ) {
     
-    var id = this.parentNode.getAttribute(iframe);
-    var respon = id.contentWindow.document.body?io.contentWindow.document.body.innerHTML:null;
+    //var id = document.getElementById(iframe);
+    //var respon = id.contentWindow.document.body?io.contentWindow.document.body.innerHTML:null;
 
-    console.log(respon);
+    console.log(this);
 }
 
 
