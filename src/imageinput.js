@@ -1,16 +1,7 @@
-/*upclick ({
-    element: uploader,
-    action  : '/path_to/you_server_script.php', 
-    onstart : function(filename) {
-        alert('Start upload: '+filename);
-    },
-    oncomplete: function(response_data) {
-        alert(response_data);
-    }
-    If activated, a new hidden input name "thumb-[name-of-your-imageinput]" will be added to your form with the thumnail path as a 
-});*/
+/*
+    
 
-
+*/
 
 (function () {
     'use strict';
