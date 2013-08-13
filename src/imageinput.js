@@ -32,7 +32,9 @@
         iframe = document.createElement('iframe'),   /* Wrapper forms */
         form  = document.createElement('form'),   /* forms */
         file  = document.createElement('input'),   /* Create Input File */
-        text  = document.createElement('p'),   /* Create P tagNode */         
+        text  = document.createElement('p'),   /* Create P tagNode */
+        msg   = document.createElement('p'),   /* Create P tagNode */
+        img   = document.createElement('img'),
         a     = document.createElement('a');
            
     
@@ -49,6 +51,8 @@
     a.className     = 'link-upload'; 
     file.className  = 'input-file';
     text.className  = "text-upload";
+    msg.className   = 'msgError';
+    img.className   = 'img-preview';
     iframe.className = "iframe-upload";    
 
     /* Div wrapper for form and iframe */
@@ -181,6 +185,8 @@
         a.style.height = height +'px';
         a.setAttribute('data-target', 'frame-'+id);       
         a.appendChild(text);
+        a.appendChild(msg);
+        a.appendChild(img);
         
         /* return node */
         return a.cloneNode(true);
@@ -200,12 +206,18 @@
                     <input type="hidden" name="sizerule" value="'+ validator(node, 'data-sizerule') +'">';
 
 
-
-        /* create block Iframe */
-        file.setAttribute('accept', format);
+        /* create block Iframe */        
         form.setAttribute('target', 'iframe_upload_'+id);  
         form.innerHTML = frag;      
         
+        var accept = format === 'jpg' ? 'image/jpeg' :
+                                format === 'jpg,gif' ? 'image/jpeg,image/gif' :
+                                format === 'png' ? 'image/png' :
+                                format === 'jpg,png' ? 'image/jpeg,image/png' :
+                                'image/jpeg,image/png,image/gif';
+
+        file.setAttribute('accept', accept);
+
         form.appendChild( file );
 
         /* return node */
@@ -320,7 +332,7 @@
 /* Callback data from server */
 function callbackData( id ) {   
     
-    var responseText;
+    var responseText;   // response data from server
 
     if( id.contentWindow ) {
          responseText = id.contentWindow.document.body ? JSON.parse(id.contentWindow.document.body.innerHTML) : null;
@@ -329,25 +341,27 @@ function callbackData( id ) {
         responseText = id.contentDocument.document.body ? JSON.parse(id.contentDocument.document.body.innerHTML) : null;       
     }   
 
-    var block = id.getAttribute('data-callback'),
-        retur = document.getElementById(block),
-        returnBlock = retur.querySelector(".link-upload");
+    var blockId = id.getAttribute('data-callback'),
+        block   = document.getElementById(blockId).querySelector(".link-upload");
 
-    var p = document.createElement('p');
-        p.className = 'msgError';
+        block.firstChild.style.display = "none";
 
-    var img = document.createElement('img');   /* Create Image tagNode */ 
-        img.className = 'img-preview';
+    var p   = block.querySelector('.msgError');        
+    var img = block.querySelector('.img-preview');
+    
 
     if ( responseText.status === 'success' ) {
-        img.src = 'server/'+responseText.preview;
-        
-        returnBlock.appendChild(img);
+        p.style.display = 'none';
+
+        img.src = 'server/'+ responseText.file;
+        img.style.display = 'inline-block';
 
     } else {
-        returnBlock.appendChild( p.innerHTML = responseText.msg );
-    }
-        
+        img.style.display = 'none';
+
+        p.innerHTML = responseText.msg;
+        p.style.display = 'block';
+    }        
     
 }   // */
 

@@ -4,6 +4,8 @@
 
 .imageinput {display: none;}
 
+.msgError, .img-preview {display: none;}
+
 .upload-item {
     margin: 0;
     margin-bottom: 20px;}
@@ -31,14 +33,16 @@
         top: 20%;
         width: 100%; }
 
-    .upload-item p cite {
-        font-style: normal;
-        font-weight: lighter; }
+        .upload-item p cite {
+            font-style: normal;
+            font-weight: lighter; }
+
+    .upload-item p.msgError { font-size: 0.9em; }
 
 
 #resAJAXimage {
-    /*position: absolute;
+    position: absolute;
     left: -7777px;
     top: -7777px;
-    visibility: hidden;*/
+    visibility: hidden;
 }
