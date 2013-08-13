@@ -17,7 +17,7 @@
         img_name   : "auto",
         img_path   : "/",
         img_rule   : "free",
-        img_format : "image/jpeg,image/png,image/gif"
+        img_format : "jpg,png,gif"
     };
     
     /* 
@@ -39,7 +39,6 @@
     /*  Node File Attributes */
     file.setAttribute('type', 'file');
     file.setAttribute('name', 'file');
-    file.setAttribute('onchange', 'this.form.submit();');
 
     /* Node form Attributes */
     form.setAttribute('enctype', 'multipart/form-data');
@@ -149,10 +148,10 @@
             case 'data-formats':
                 result = check('img_format');
                 if ( pass === true ) {
-                    var value = result === 'jpg' ? 'image/jpeg' :
-                                result === 'jpg,gif' ? 'image/jpeg,image/gif' :
-                                result === 'png' ? 'image/png' :
-                                result === 'jpg,png' ? 'image/jpeg,image/png' :
+                    var value = result === 'jpg' ? 'jpg' :
+                                result === 'jpg,gif' ? 'jpg,gif' :
+                                result === 'png' ? 'png' :
+                                result === 'jpg,png' ? 'jpg,png' :
                                 defaults.img_format;
                     return value;
                 } else
@@ -200,6 +199,7 @@
                     <input type="hidden" name="sizerule" value="'+ validator(node, 'data-sizerule') +'">';
 
 
+
         /* create block Iframe */
         file.setAttribute('accept', format);
         form.setAttribute('target', 'iframe_upload_'+id);  
@@ -214,6 +214,7 @@
     /* Constructor Iframe */
     function addIframe(id) {
         iframe.setAttribute('name', 'iframe_upload_'+id);
+        //iframe.setAttribute('onLoad', 'console.log("Test "+id)');
         iframe.id = 'iframe_upload_'+id;
 
         /* return node */
@@ -244,9 +245,8 @@
         }
 
         return true;
-    }
+    }    
     
-
 
     /* Insert Blocks to father */
     for (var i = 0, len = input.length; i < len; i++ ) {
@@ -273,7 +273,6 @@
     } 
 
 
-
     /*  
       Events into Block
 
@@ -298,18 +297,29 @@
 
 
     // Event Onchange
-    /*var image = document.querySelectorAll('.input-file');
+    var image = document.querySelectorAll('.input-file');
 
     for ( var i = 0, len = image.length; i < len; i++ ) {
 
         image[i].onchange = function() {
+
+            var id    = this.parentNode.getAttribute('target'),
+                frame = document.getElementById(id);
+
+            frame.setAttribute('onLoad', 'callbackData();');
+            this.form.submit();
         }
-    };*/
+    };   //*/
     
 
     //console.log(content);
 })();
 
+
+/* Return callback data from server */
+function callbackData() {
+    console.log('text');
+}
 
 
 
