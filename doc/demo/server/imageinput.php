@@ -2,16 +2,16 @@
 require("lib/Images.php");
 
 
-$_POST['width']            = 223;
-$_POST['height']           = 118;
+// $_POST['width']            = 223;
+// $_POST['height']           = 118;
 
-$_POST['thumbnail-height'] = "100";
-$_POST['preview-height']   = "50";
-$_POST['path']             = "imagenes/prueba";
-$_POST['name']             = "auto"; //auto|fixed_name
-$_POST['sizerule']         = "strict"; //strict|proportion|free
-$_POST['formats']          = "jpg"; //all|jpg,png,gif
-// $_POST['text']          = "message";
+// $_POST['thumbnail-height'] = "100";
+// $_POST['preview-height']   = "50";
+// $_POST['path']             = "imagenes/prueba";
+// $_POST['name']             = "auto"; //auto|fixed_name
+// $_POST['sizerule']         = "strict"; //strict|proportion|free
+// $_POST['formats']          = "jpg"; //all|jpg,png,gif
+// // $_POST['text']          = "message";
 
 
 $FOTOS= new Images();
