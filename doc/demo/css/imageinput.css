@@ -30,3 +30,11 @@
     .upload-item p cite {
         font-style: normal;
         font-weight: lighter; }
+
+
+#resAJAXimage {
+    position: absolute;
+    left: -7777px;
+    top: -7777px;
+    visibility: hidden;
+}

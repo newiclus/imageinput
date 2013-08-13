@@ -11,30 +11,6 @@
 });*/
 
 
-/* 
-
-*/
-
-var imageInput = function imageInput () {
-    'use strict';
-    init : function() {
-
-    },
-
-    defaults : {
-        image_dir  : 'www/public',   // absolute path to the directory
-        upload_msg : 'Click to Upload',
-        img_width  : 300,
-        img_height : 180,
-        thumbnail_height : "",
-        preview_height   : 180,
-        img_name   : "auto",
-        img_path   : "/",
-        img_rule   : "free",
-        img_format : "image/jpeg,image/png,image/gif"
-    }
-
-}
 
 (function () {
     'use strict';
@@ -57,24 +33,41 @@ var imageInput = function imageInput () {
       Variables
     */    
     var input   = document.querySelectorAll('.imageinput'),   /* Filter Inputs */
-        son     = [],   /* Array input Upload */
+        son     = [],   /* Array blocks Upload */
+        iframes = [],   /* Array form - iframe */
 
         /*  TagNode   */
-        file = document.createElement('input'),   /* Create Input File */
-        text = document.createElement('p'),   /* Create P tagNode */ 
-        a    = document.createElement('a');
+        div  = document.createElement('div'),   /* Wrapper forms */
+        iframe = document.createElement('iframe'),   /* Wrapper forms */
+        form  = document.createElement('form'),   /* forms */
+        file  = document.createElement('input'),   /* Create Input File */
+        text  = document.createElement('p'),   /* Create P tagNode */ 
+        a     = document.createElement('a');
            
     
     /*  Node File Attributes */
     file.setAttribute('type', 'file');
-    file.setAttribute('name', 'imagefile');        
-    file.setAttribute('enctype', 'multipart/form-data');
+    file.setAttribute('name', 'imagefile');
+    file.setAttribute('onchange', 'this.form.submit();');
+
+    /* Node form Attributes */
+    form.setAttribute('enctype', 'multipart/form-data');
+    form.setAttribute('action', 'server/imageinput.php');
+    form.setAttribute('method', 'post');
     
     /* Asign ClassName */
-    a.className = 'link-upload'; 
-    text.className = "text-upload";
-        
-    
+    a.className     = 'link-upload'; 
+    file.className  = 'input-file';
+    text.className  = "text-upload";
+    iframe.className = "iframe-upload";
+
+    /* Div wrapper for form and iframe */
+    var resp    = div.cloneNode(true);
+        resp.id = 'resAJAXimage';
+        document.body.appendChild(resp);
+
+    var contIframe = document.getElementById('resAJAXimage');        
+
 
     /*
       Functions and Class
@@ -93,9 +86,8 @@ var imageInput = function imageInput () {
                 pass   = true;
                 return output;
             } else {
-                return defaults[def]; 
+                return defaults[def];
             }
-            
         }           
 
         switch (attr) {
@@ -106,10 +98,9 @@ var imageInput = function imageInput () {
                     var value = ( isNaN(result) ) ? defaults.img_height : result;
                     return value;
                 } else
-                    return defaults.img_height;
+                    return result;
 
             break;
-
 
             case 'data-width':
                 result = parseInt( check('img_width') );
@@ -118,24 +109,50 @@ var imageInput = function imageInput () {
                     var value = ( isNaN(result) ) ? defaults.img_width : result;
                     return value;
                 } else
-                    return defaults.img_width;
+                    return result;
                 
             break;
 
             case 'data-thumbnail-height':
+                result = parseInt( check('thumbnail_height') );                
+
+                if ( pass === true ) {
+                    var value = ( isNaN(result) ) ? defaults.thumbnail_height : result;
+                    return value;
+                } else {
+                    return 'none';
+                }
             break;
 
             case 'data-preview-height':
+                result = parseInt( check('preview_height') );                
+
+                if ( pass === true ) {
+                    var value = ( isNaN(result) ) ? defaults.preview_height : result;
+                    return value;
+                } else {
+                    return result;
+                }
             break;
 
             case 'data-path':
+                return check('image_dir');
             break;
 
             case 'data-name':
+                return check('img_name');
             break;
 
             case 'data-sizerule':
-
+                result = check('img_rule');
+                if ( pass === true ) {
+                    var value = result === 'strict' ? 'strict' :
+                                result === 'proportion' ? 'proportion' :
+                                result === 'free' ? 'free' :
+                                defaults.img_format;
+                    return value;
+                } else
+                    return defaults.img_format;
             break;
 
             case 'data-formats':
@@ -160,23 +177,55 @@ var imageInput = function imageInput () {
 
 
     /* Constructor Blocks */
-    function addBlock( node ) {
+    function addBlock( node, id ) {
 
         var width  = validator(node, 'data-width'),
             height = validator(node, 'data-height'),
-            texto  = validator(node, 'data-text'),
-            format = validator(node, 'data-formats');
+            texto  = validator(node, 'data-text');
 
-        file.setAttribute('accept', format);
-
+        /* Create Block */
         text.innerHTML = '<span>'+ width +' x '+ height +'</span> <br> <cite>'+ texto +'</cite>';
 
         a.style.width  = width +'px';
         a.style.height = height +'px';
-        a.appendChild(file);
+        a.setAttribute('data-target', 'frame-'+id);       
         a.appendChild(text);
-
+        
+        /* return node */
         return a.cloneNode(true);
+    }
+
+    /* Constructor Forms */
+    function addForm( node, id ) {
+
+        var format = validator(node, 'data-formats'),
+            frag = '<input type="hidden" name="width" value="'+ validator(node, 'data-width') +'">\
+                    <input type="hidden" name="height" value="'+ validator(node, 'data-height') +'">\
+                    <input type="hidden" name="thumbnail" value="'+ validator(node, 'data-thumbnail-height')  +'">\
+                    <input type="hidden" name="preview" value="'+ validator(node, 'data-preview-height') +'">\
+                    <input type="hidden" name="path" value="'+ validator(node, 'data-path') +'">\
+                    <input type="hidden" name="name" value="'+ validator(node, 'data-name') +'">\
+                    <input type="hidden" name="sizerule" value="'+ validator(node, 'data-sizerule') +'">';
+
+
+        /* create block Iframe */
+        file.setAttribute('accept', format);
+        form.setAttribute('target', 'iframe_upload_'+id);  
+        form.innerHTML = frag;      
+        
+        form.appendChild( file );
+
+        /* return node */
+        return form.cloneNode(true);
+    }
+
+    /* Constructor Iframe */
+    function addIframe(id) {
+        iframe.setAttribute('name', 'iframe_upload_'+id);
+        iframe.id = 'iframe_upload_'+id;
+
+        /* return node */
+        return iframe.cloneNode(true);
     }
 
 
@@ -204,7 +253,7 @@ var imageInput = function imageInput () {
 
         return true;
     }
-
+    
 
 
     /* Insert Blocks to father */
@@ -214,18 +263,33 @@ var imageInput = function imageInput () {
         son[i].id ='upload_' + i;
         son[i].className ='upload-item';
 
-        /* Insert to sons(DD) */
-        son[i].appendChild( addBlock( input[i] ) );
+        /* Insert sons(div) */
+        son[i].appendChild( addBlock( input[i], i ) );
 
         /* Call inserAfter */
         insertAfter(input[i], son[i]);
+
+        /* Insert form/iframe to div#resAJAXimage */
+        iframes[i]    = div.cloneNode(true);
+        iframes[i].id = 'frame-' + i;
+
+        /* Insert Iframe */
+        iframes[i].appendChild( addForm( input[i], i ) );
+        iframes[i].appendChild( addIframe( i ) );
+        contIframe.appendChild(iframes[i]);
     } 
 
 
 
     /*  
       Events into Block
+
+      @triger
+      @onchange
+
     */
+
+    // Event Click
     var block = document.querySelectorAll('.link-upload');
 
     for ( var i = 0, len = block.length; i < len; i++ ) { 
@@ -234,13 +298,24 @@ var imageInput = function imageInput () {
             
             var callFile = this.getElementsByTagName('input');
             callFile[0].click();
-            //console.log(callFile);
         }
     }
+
+
+    // Event Onchange
+    /*var image = document.querySelectorAll('.input-file');
+
+    for ( var i = 0, len = image.length; i < len; i++ ) {
+
+        image[i].onchange = function() {
+        }
+    };*/
     
 
     //console.log(content);
 })();
+
+
 
 
 
@@ -257,3 +332,5 @@ function onReady ( callback ) {
 }
 
 //onReady();
+
+
