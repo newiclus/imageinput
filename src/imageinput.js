@@ -38,7 +38,7 @@
     
     /*  Node File Attributes */
     file.setAttribute('type', 'file');
-    file.setAttribute('name', 'imagefile');
+    file.setAttribute('name', 'file');
     file.setAttribute('onchange', 'this.form.submit();');
 
     /* Node form Attributes */
@@ -111,7 +111,7 @@
                     var value = ( isNaN(result) ) ? defaults.thumbnail_height : result;
                     return value;
                 } else {
-                    return 'none';
+                    return '';
                 }
             break;
 
@@ -192,8 +192,8 @@
         var format = validator(node, 'data-formats'),
             frag = '<input type="hidden" name="width" value="'+ validator(node, 'data-width') +'">\
                     <input type="hidden" name="height" value="'+ validator(node, 'data-height') +'">\
-                    <input type="hidden" name="thumbnail" value="'+ validator(node, 'data-thumbnail-height')  +'">\
-                    <input type="hidden" name="preview" value="'+ validator(node, 'data-preview-height') +'">\
+                    <input type="hidden" name="thumbnail-height" value="'+ validator(node, 'data-thumbnail-height')  +'">\
+                    <input type="hidden" name="preview-height" value="'+ validator(node, 'data-preview-height') +'">\
                     <input type="hidden" name="path" value="'+ validator(node, 'data-path') +'">\
                     <input type="hidden" name="formats" value="'+ format +'">\
                     <input type="hidden" name="name" value="'+ validator(node, 'data-name') +'">\
