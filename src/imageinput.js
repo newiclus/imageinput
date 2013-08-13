@@ -195,6 +195,7 @@
                     <input type="hidden" name="thumbnail" value="'+ validator(node, 'data-thumbnail-height')  +'">\
                     <input type="hidden" name="preview" value="'+ validator(node, 'data-preview-height') +'">\
                     <input type="hidden" name="path" value="'+ validator(node, 'data-path') +'">\
+                    <input type="hidden" name="formats" value="'+ format +'">\
                     <input type="hidden" name="name" value="'+ validator(node, 'data-name') +'">\
                     <input type="hidden" name="sizerule" value="'+ validator(node, 'data-sizerule') +'">';
 
@@ -263,6 +264,7 @@
         /* Insert form/iframe to div#resAJAXimage */
         iframes[i]    = div.cloneNode(true);
         iframes[i].id = 'frame-' + i;
+        iframes[i].className = 'cont-form';
 
         /* Insert Iframe */
         iframes[i].appendChild( addForm( input[i], i ) );
@@ -286,9 +288,11 @@
     for ( var i = 0, len = block.length; i < len; i++ ) { 
 
         block[i].onclick = function() {
-            
-            var callFile = this.getElementsByTagName('input');
-            callFile[0].click();
+
+            var id       = this.getAttribute('data-target');
+            var callForm = document.getElementById(id);
+            var callFile = callForm.querySelector(".input-file");
+                callFile.click();
         }
     }
 
