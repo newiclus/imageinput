@@ -98,29 +98,35 @@ class Images
 
 		$quality=90;
 
-		$reduced=FALSE;
+		$reduced=FALSE; 
 
 		switch($this->opt['extension'])
 		{
 		    case "jpg":
 
+		    	$img=imagecreatefromjpeg($this->opt['dest']);
+
 				$miniature = ImageCreateTrueColor($width, $height);
 
-				imagecopyresampled($miniature,$this->opt['img'],0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 
 		        $reduced = imagejpeg($miniature,$file_dest,$quality);
 
 		    break;
 		    case "gif":
 
+		    	$img=imagecreatefromgif($this->opt['dest']);		    
+
 				$miniature = ImageCreateTrueColor($width, $height);
 
-				imagecopyresampled($miniature,$this->opt['img'],0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 
 		        $reduced = imagegif($miniature,$file_dest,$quality);
 
 	        break;
 		    case "png":
+
+		    	$img=imagecreatefrompng($this->opt['dest']);
 
 				$miniature = ImageCreateTrueColor($width, $height);
 
@@ -129,7 +135,7 @@ class Images
 				imagefill($miniature, 0, 0, $colorTransparent);
 				imagesavealpha($miniature, true);
 
-				imagecopyresampled($miniature,$this->opt['img'],0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 
 		        $reduced = imagepng($miniature,$file_dest);
 
@@ -159,15 +165,15 @@ class Images
 
 	    if($this->opt['extension']=="jpg")
 			
-	    	if(!@$this->opt['img']=imagecreatefromjpeg($this->opt['file_temp'])) return "error reading jpg file";
+	    	if(!@imagecreatefromjpeg($this->opt['file_temp'])) return "error reading jpg file";
 
 	    elseif($this->opt['extension']=="gif")
 
-	    	if(!@$this->opt['img']=imagecreatefromgif($this->opt['file_temp'])) return "error reading gif file";
+	    	if(!@imagecreatefromgif($this->opt['file_temp'])) return "error reading gif file";
 
 	    elseif($this->opt['extension']=="png")
 
-	    	if(!@$this->opt['img']=imagecreatefrompng($this->opt['file_temp'])) return "error reading png file";	 
+	    	if(!@imagecreatefrompng($this->opt['file_temp'])) return "error reading png file";	 
 				
 	    else 
 	    	return "Invalid extension";
