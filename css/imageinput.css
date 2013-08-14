@@ -8,7 +8,8 @@
 
 .upload-item {
     margin: 0;
-    margin-bottom: 20px;}
+    margin-bottom: 20px; 
+    position: relative; }
 
     .upload-item a {
         background-color: #EFEFEF;
@@ -37,7 +38,14 @@
             font-style: normal;
             font-weight: lighter; }
 
-    .upload-item p.msgError { font-size: 0.9em; }
+    .upload-item p.msgError {
+        color: #E68383;
+        font-size: 0.9em;
+        font-weight: 300;
+        padding-top: 5px;
+        position: static;
+        text-align: left;
+        width: 100%; }
 
 
 #resAJAXimage {

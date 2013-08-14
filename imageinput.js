@@ -7,7 +7,7 @@
     'use strict';
 
     /* Default options  */
-    var defaults = {
+    var options = {
         image_dir  : 'www/public',   // absolute path to the directory
         upload_msg : 'Click to Upload',
         img_width  : 300,
@@ -18,7 +18,7 @@
         img_path   : "/",
         img_rule   : "free",
         img_format : "jpg,png,gif",
-        php_path  : 'imageinput.php'
+        php_path   : 'imageinput.php'
     };
     
     /* 
@@ -45,7 +45,7 @@
 
     /* Node form Attributes */
     form.setAttribute('enctype', 'multipart/form-data');
-    form.setAttribute('action', defaults.php_path);
+    form.setAttribute('action', options.php_path);
     form.setAttribute('method', 'post');
     
     /* Asign ClassName */
@@ -81,7 +81,7 @@
                 pass   = true;
                 return output;
             } else {
-                return defaults[def];
+                return options[def];
             }
         }           
 
@@ -90,7 +90,7 @@
                 result = parseInt( check('img_height') );                
 
                 if ( pass === true ) {
-                    var value = ( isNaN(result) ) ? defaults.img_height : result;
+                    var value = ( isNaN(result) ) ? options.img_height : result;
                     return value;
                 } else
                     return result;
@@ -101,7 +101,7 @@
                 result = parseInt( check('img_width') );
 
                 if ( pass === true ) {
-                    var value = ( isNaN(result) ) ? defaults.img_width : result;
+                    var value = ( isNaN(result) ) ? options.img_width : result;
                     return value;
                 } else
                     return result;
@@ -112,7 +112,7 @@
                 result = parseInt( check('thumbnail_height') );                
 
                 if ( pass === true ) {
-                    var value = ( isNaN(result) ) ? defaults.thumbnail_height : result;
+                    var value = ( isNaN(result) ) ? options.thumbnail_height : result;
                     return value;
                 } else {
                     return '';
@@ -123,7 +123,7 @@
                 result = parseInt( check('preview_height') );                
 
                 if ( pass === true ) {
-                    var value = ( isNaN(result) ) ? defaults.preview_height : result;
+                    var value = ( isNaN(result) ) ? options.preview_height : result;
                     return value;
                 } else {
                     return result;
@@ -144,7 +144,7 @@
                     var value = result === 'strict' ? 'strict' :
                                 result === 'proportion' ? 'proportion' :
                                 result === 'free' ? 'free' :
-                                defaults.img_rule;
+                                options.img_rule;
                     return value;
                 } else
                     return result;
@@ -158,10 +158,10 @@
                                 result === 'jpg,gif' ? 'jpg,gif' :
                                 result === 'png' ? 'png' :
                                 result === 'jpg,png' ? 'jpg,png' :
-                                defaults.img_format;
+                                options.img_format;
                     return value;
                 } else
-                    return defaults.img_format;
+                    return options.img_format;
 
             break;
 
@@ -185,8 +185,7 @@
         a.style.width  = width +'px';
         a.style.height = height +'px';
         a.setAttribute('data-target', 'frame-'+id);       
-        a.appendChild(text);
-        a.appendChild(msg);
+        a.appendChild(text);        
         a.appendChild(img);
         
         /* return node */
@@ -243,7 +242,7 @@
 
 
     /* Check image file extension */
-    function CheckFileImage() {
+    /*function CheckFileImage() {
         
         var fileName = document.getElementById("uploadFile").value;
 
@@ -259,7 +258,7 @@
         }
 
         return true;
-    }    
+    }   // */
     
 
     /* Insert Blocks to father */
@@ -271,6 +270,7 @@
 
         /* Insert sons(div) */
         son[i].appendChild( addBlock( input[i], i ) );
+        son[i].appendChild(msg.cloneNode(true));
 
         /* Call inserAfter */
         insertAfter(input[i], son[i]);
@@ -344,21 +344,22 @@ function callbackData( id ) {
 
     var blockId = id.getAttribute('data-callback'),
         block   = document.getElementById(blockId).querySelector(".link-upload");
+        blockParent = document.getElementById(blockId);        
 
-        block.firstChild.style.display = "none";
-
-    var p   = block.querySelector('.msgError');        
+    var p   = blockParent.querySelector('.msgError');        
     var img = block.querySelector('.img-preview');
     
 
     if ( responseText.status === 'success' ) {
         p.style.display = 'none';
+        block.firstChild.style.display = "none";
 
-        img.src = defaults.php_path + responseText.file;
+        img.src = responseText.file;
         img.style.display = 'inline-block';
 
     } else {
         img.style.display = 'none';
+        block.firstChild.style.display = "block";
 
         p.innerHTML = responseText.msg;
         p.style.display = 'block';
