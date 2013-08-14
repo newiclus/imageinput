@@ -34,8 +34,7 @@
         form  = document.createElement('form'),   /* forms */
         file  = document.createElement('input'),   /* Create Input File */
         text  = document.createElement('p'),   /* Create P tagNode */
-        msg   = document.createElement('p'),   /* Create P tagNode */
-        img   = document.createElement('img'),
+        msg   = document.createElement('p'),   /* Create P tagNode */        
         a     = document.createElement('a');
            
     
@@ -52,8 +51,7 @@
     a.className     = 'link-upload'; 
     file.className  = 'input-file';
     text.className  = "text-upload";
-    msg.className   = 'msgError';
-    img.className   = 'img-preview';
+    msg.className   = 'msgError';    
     iframe.className = "iframe-upload";    
 
     /* Div wrapper for form and iframe */
@@ -185,8 +183,7 @@
         a.style.width  = width +'px';
         a.style.height = height +'px';
         a.setAttribute('data-target', 'frame-'+id);       
-        a.appendChild(text);        
-        a.appendChild(img);
+        a.appendChild(text);
         
         /* return node */
         return a.cloneNode(true);
@@ -270,7 +267,7 @@
 
         /* Insert sons(div) */
         son[i].appendChild( addBlock( input[i], i ) );
-        son[i].appendChild(msg.cloneNode(true));
+        son[i].appendChild( msg.cloneNode(true) );
 
         /* Call inserAfter */
         insertAfter(input[i], son[i]);
@@ -336,29 +333,35 @@ function callbackData( id ) {
     var responseText;   // response data from server
 
     if( id.contentWindow ) {
-         responseText = id.contentWindow.document.body ? JSON.parse(id.contentWindow.document.body.innerHTML) : null;
+        responseText = id.contentWindow.document.body ? JSON.parse(id.contentWindow.document.body.innerHTML) : null;
          
-    } else if(id.contentDocument) {
+    } else if( id.contentDocument ) {
         responseText = id.contentDocument.document.body ? JSON.parse(id.contentDocument.document.body.innerHTML) : null;       
     }   
 
     var blockId = id.getAttribute('data-callback'),
         block   = document.getElementById(blockId).querySelector(".link-upload");
-        blockParent = document.getElementById(blockId);        
+        blockParent = document.getElementById(blockId);            
 
-    var p   = blockParent.querySelector('.msgError');        
-    var img = block.querySelector('.img-preview');
-    
+    var p   = blockParent.querySelector('.msgError');       
+    var delImg = block.querySelector('.img-preview');
+
+    if ( delImg !== null )
+        delImg.parentNode.removeChild(delImg);
+
 
     if ( responseText.status === 'success' ) {
         p.style.display = 'none';
         block.firstChild.style.display = "none";
 
-        img.src = responseText.file;
-        img.style.display = 'inline-block';
+        var img  = document.createElement('img');
+            img.className = 'img-preview';
+            img.src = responseText.file;
+            img.style.display = 'inline-block';
+        
+        block.appendChild(img);            
 
-    } else {
-        img.style.display = 'none';
+    } else {        
         block.firstChild.style.display = "block";
 
         p.innerHTML = responseText.msg;
