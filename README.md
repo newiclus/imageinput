@@ -105,7 +105,7 @@ Example :
 What it looks like
 ------------------
 
-![alt tag](https://raw.github.com/qualitri/imageinput/master/demo.png)
+![alt tag](https://raw.github.com/qualitri/imageinput/master/screenshots/screenshot.png)
 
 
 Try it
