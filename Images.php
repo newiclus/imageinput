@@ -23,6 +23,9 @@ class Images
 		$this->opt['extension']    = strtolower($ext[sizeof($ext)-1]);
 
 
+		$this->opt['name'] = ($this->opt['name']=='auto')?$_FILES[$name]['name']:$this->opt['name'];
+
+
 		if(substr($this->opt['name'],-4,4)!=".".$this->opt['extension'])
 			$this->opt['name']=$this->opt['name'].".".$this->opt['extension'];
 

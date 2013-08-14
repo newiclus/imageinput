@@ -23,13 +23,3 @@ else
 echo json_encode($json);
 
 
-
-
-
-// echo "<!DOCTYPE html><html><body><script>";
-// // echo "function successImage(msg){ alert('success: '+msg); }";
-// // echo "function errorImage(msg){ alert('error: '+msg); }";
-// echo "parent.";
-// echo ($msg==1)?"successImage('".$image->file()."','".$image->file_preview()."');":"errorImage('".$msg."');";
-// echo "</script></body></html>";
-
