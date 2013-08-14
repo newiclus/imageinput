@@ -110,7 +110,7 @@ class Images
 
 		$this->opt[$index]=$file_dest;
 
-		$quality=90;
+		$quality=100;
 
 		$reduced=FALSE; 
 
