@@ -26,9 +26,8 @@
 
     .upload-item p {
         color: #A9A9A9;
-        font: 700 1.5em helvetica,sans-serif;
+        font: 700 1em helvetica,sans-serif;
         margin: 0;
-        padding: 10px;
         position: absolute;
         text-align: center;
         top: 20%;
@@ -52,5 +51,4 @@
     position: absolute;
     left: -7777px;
     top: -7777px;
-    visibility: hidden;
-}
+    visibility: hidden; }
