@@ -13,14 +13,28 @@
 
     .upload-item a {
         background-color: #EFEFEF;
+        box-shadow: inset 0 0 14px rgba(0,0,0,0.1);
         cursor: pointer;
         display: block; 
         overflow: hidden; 
-        position: relative; }
+        position: relative; 
+        text-align: center; 
+        vertical-align: middle; }
 
     .upload-item a:hover { background-color: #E7E7E7; }
 
-    .upload-item a.link-upload img { max-width: 100%; }
+        .upload-item a.link-upload img { 
+            display: inline;
+            font-size: 0px; 
+            vertical-align: middle; }
+
+        .upload-item a[data-size="free"] img,
+        .upload-item a[data-size="crop"] img {
+            max-width: 100%;
+        }
+
+        .upload-item a[data-size="crop"] img {            
+        }
 
     .upload-item input { visibility: hidden; }
 

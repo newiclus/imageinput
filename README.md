@@ -54,7 +54,7 @@ Usage
 
 ```Desired image width in pixels```
 
-**data-preview-height** : _(optional, default : "")_ 
+**data-thumbnail-height** : _(optional, default : "")_ 
 
 ```Thumnail height in pixels```
 
