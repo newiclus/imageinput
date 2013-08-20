@@ -47,37 +47,13 @@ Thumbnails can be generated automatically.
 All parameters stored in a input.
 
 data keys:
- 
-<table>
-<thead>
-  <tr>
-    <th>Name</th><th>Type</th><th>Description</th><th>Default</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-	<td> <b>data-height</b> </td>
-	<td>integer</td>
-	<td><i>desired image height in pixels</i></td>
-	<td>180px</td>
-  </tr>
-</tbody>
-</table>
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
 
-``` 
-	default : 180px 
-	image height in pixels
-```
+| Name          | Type       | Description                      | Default   |
+| ------------- |:----------:| --------------------------------:| ---------:|
+| `data-height` | integer    | *desired image height in pixels* | 180px     |
+| `data-width`  | integer    | *Desired image width in pixels*  | 180px     |
 
-**data-width** 
-
-```Desired image width in pixels```
 
 **data-thumbnail-height** : _(optional, default : "")_ 
 
