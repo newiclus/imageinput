@@ -28,6 +28,9 @@
             font-size: 0px; 
             vertical-align: middle; }
 
+        .upload-item a.link-upload[data-size="overflow"] img { 
+            margin:-100%;
+        }    
         .upload-item a[data-size="free"] img,
         .upload-item a[data-size="crop"] img {
             max-width: 100%;

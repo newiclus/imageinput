@@ -206,9 +206,9 @@
                         var value = result === 'strict' ? 'strict' :
                                     result === 'proportion' ? 'proportion' :
                                     result === 'free' ? 'free' :
-                                    result === 'crop' ? 'crop' :
+                                    result === 'fit' ? 'fit' :
                                     result === 'overflow' ? 'overflow' :
-                                    result === 'fixedwidth' ? 'fixedwidth' :
+                                    result === 'crop' ? 'crop' :
                                     imageInput.options['img_rule'];
                         return value;
                     } else
