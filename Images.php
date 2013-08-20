@@ -57,9 +57,85 @@ class Images
 				return $copying;
 		}
 
+		// RESIZING
         if($this->opt['sizerule'] == 'proportion')
         {
 			$coyping=$this->reduce($this->opt['height'],"","dest");
+			if($coyping!=1)
+				return $copying;
+
+        }
+        elseif($this->opt['sizerule'] == 'proportion')
+        {
+        	if( $this->opt['img_w']/$this->opt['img_h'] > $this->opt['width']/$this->opt['height'] )
+        	{
+        		$height_dest=$this->opt['height']*($this->opt['img_w']/$this->opt['img_h']);
+				$coyping=$this->reduce($height_dest,"","dest");
+        	} 
+        	else 
+        	{
+        		$height_dest=$this->opt['height'];
+				$coyping=$this->reduce($height_dest,"","dest");
+        	}
+
+			if($coyping!=1)
+				return $copying;
+
+        }
+        elseif($this->opt['sizerule'] == 'fit')
+        {
+        	if( $this->opt['img_w']/$this->opt['img_h'] > $this->opt['width']/$this->opt['height'] )
+        	{
+        		$height_dest=$this->opt['width']*($this->opt['img_h']/$this->opt['img_w']);
+				$coyping=$this->reduce($height_dest,"","dest");
+        	} 
+        	else 
+        	{
+        		$height_dest=$this->opt['height'];
+ 				$coyping=$this->reduce($height_dest,"","dest");
+        	}
+
+			if($coyping!=1)
+				return $copying;
+
+        }  
+        elseif($this->opt['sizerule'] == 'overflow')
+        {
+        	if( $this->opt['img_w']/$this->opt['img_h'] > $this->opt['width']/$this->opt['height'] )
+        	{
+        		$height_dest=$this->opt['height'];
+				$coyping=$this->reduce($height_dest,"","dest");
+        	} 
+        	else 
+        	{
+        		$height_dest=$this->opt['width']*($this->opt['img_h']/$this->opt['img_w']);
+				$coyping=$this->reduce($height_dest,"","dest");
+        	}
+
+			if($coyping!=1)
+				return $copying;
+
+        }  
+        elseif($this->opt['sizerule'] == 'crop')
+        {
+        	if( $this->opt['img_w']/$this->opt['img_h'] > $this->opt['width']/$this->opt['height'] )
+        	{
+        		$height_dest=$this->opt['height'];
+				$coyping=$this->reduce($height_dest,"","dest");
+
+				$coyping=$this->reduce($this->opt['height'],"","dest",TRUE,$this->opt['width']);
+        	} 
+        	else 
+        	{
+        		$height_dest=$this->opt['width']*($this->opt['img_h']/$this->opt['img_w']);
+				$coyping=$this->reduce($height_dest,"","dest");
+
+				$this->opt['img_h']=$height_dest;
+				$this->opt['img_w']=$this->opt['width'];
+
+				$coyping=$this->reduce($this->opt['height'],"","dest",TRUE,$this->opt['width']);
+        	}
+
 			if($coyping!=1)
 				return $copying;
 
@@ -100,12 +176,12 @@ class Images
 
 	}
 
-	function reduce($height,$subfij,$index)
+	function reduce($height,$subfij,$index,$crop=FALSE,$width=NULL)
 	{
 
 		$file_dest=str_replace(".".$this->opt['extension'],$subfij.".".$this->opt['extension'],$this->opt['dest']);
 
-		$width=intval($height*($this->opt['img_w']/$this->opt['img_h']));
+		$width=($width==NULL)?intval($height*($this->opt['img_w']/$this->opt['img_h'])):$width;
 
 		$this->opt[$index]=$file_dest;
 
@@ -121,18 +197,24 @@ class Images
 
 				$miniature = ImageCreateTrueColor($width, $height);
 
-				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				if($crop)
+					imagecopyresampled($miniature,$img,0 -($this->opt['img_w']-$width)/2 ,0 -($this->opt['img_h']-$height)/2,0,0,$width,$this->opt['img_h'],$this->opt['img_w'],$this->opt['img_h']);
+				else
+					imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 
 		        $reduced = imagejpeg($miniature,$file_dest,$quality);
 
 		    break;
 		    case "gif":
 
-		    	$img=imagecreatefromgif($this->opt['dest']);		    
+		    	$img=imagecreatefromgif($this->opt['dest']);
 
 				$miniature = ImageCreateTrueColor($width, $height);
 
-				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				if($crop)
+					imagecopyresampled($miniature,$img,0 -($this->opt['img_w']-$width)/2 ,0 -($this->opt['img_h']-$height)/2,0,0,$width,$this->opt['img_h'],$this->opt['img_w'],$this->opt['img_h']);
+				else
+					imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 
 		        $reduced = imagegif($miniature,$file_dest,$quality);
 
@@ -148,7 +230,10 @@ class Images
 				imagefill($miniature, 0, 0, $colorTransparent);
 				imagesavealpha($miniature, true);
 
-				imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
+				if($crop)
+					imagecopyresampled($miniature,$img,0 -($this->opt['img_w']-$width)/2 ,0 -($this->opt['img_h']-$height)/2,0,0,$width,$this->opt['img_h'],$this->opt['img_w'],$this->opt['img_h']);
+				else
+					imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 
 		        $reduced = imagepng($miniature,$file_dest);
 
