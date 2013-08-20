@@ -1,7 +1,7 @@
-# ImageInput #
-----------
+http://daringfireball.net/projects/markdown/syntax#img
 
-Source: [http://daringfireball.net/projects/markdown/syntax#img](http://daringfireball.net/projects/markdown/syntax#img)
+imageinput
+==========
 
 Transforms an html button input element into a input for easily uploading images.
 
@@ -13,7 +13,7 @@ After the form is submitted, the server code can just use the url set as a value
 Thumbnails can be generated automatically.
 
 
-**Features**
+**What it gives you**
 
 + Customizable and automatic default images
 + Upload at click (Credits to http://code.google.com/p/upload-at-click/ )
@@ -25,8 +25,8 @@ Thumbnails can be generated automatically.
 
 
 
-##Usage ##
-
+Usage
+-----
 ``` html
 <input type="button" class="imageinput" name="myimgfield"
       data-height="800"
@@ -35,7 +35,7 @@ Thumbnails can be generated automatically.
       data-preview-height="150"
       data-path="path-on-your-webserver"
       data-name="auto|fixed_name"
-      data-sizerule="strict|proportion|free|crop|overflow|fixedwidth"
+      data-sizerule="strict|proportion|free"
       data-formats="all|jpg,png,gif"
       data-text="message"
       data-class="className"
@@ -43,37 +43,13 @@ Thumbnails can be generated automatically.
 ```
 
 
-###Parameters definition
-All parameters stored in a input.
+####Parameters definition
 
-data keys:
- 
-<table>
-<thead>
-  <tr>
-    <th>Name</th><th>Type</th><th>Description</th><th>Default</th>
-  </tr>
-</thead>
-<tbody>
-  <tr>
-	<td> <b>data-height</b> </td>
-	<td>integer</td>
-	<td><i>desired image height in pixels</i></td>
-	<td>180px</td>
-  </tr>
-</tbody>
-</table>
 
-| Tables        | Are           | Cool  |
-| ------------- |:-------------:| -----:|
-| col 3 is      | right-aligned | $1600 |
-| col 2 is      | centered      |   $12 |
-| zebra stripes | are neat      |    $1 |
 
-``` 
-	default : 180px 
-	image height in pixels
-```
+**data-height** 
+
+```Desired image height in pixels```
 
 **data-width** 
 
@@ -126,18 +102,20 @@ Example :
 
 ```if set, override the default text displayed in the bottom```
 
-## What it looks like ##
+
+What it looks like
+------------------
 
 ![alt tag](https://raw.github.com/qualitri/imageinput/master/screenshots/screenshot.png)
 
 
-## Try it ##
+Try it
+------
 
 http://qualitri.com/imageinput/demo.php
 
-
-## Installation ##
-
+Installation
+------------
 
 Step 1/ Copy imageinput.php in a directory on your webserver, assure you that your webserver has the permissions to write new files and create new subdirectories in this direction.
 ``` 

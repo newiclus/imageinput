@@ -116,7 +116,7 @@
         options : {
             image_dir  : 'www/public',   // absolute path to the directory
             upload_msg : 'Click to Upload',
-            img_width  : 300,
+            img_width  : 180,
             img_height : 180,            
             img_name   : "auto",
             img_path   : "/",
@@ -258,7 +258,7 @@
             a.style.lineHeight = height +'px';
             a.setAttribute('data-target', 'frame-'+id);
             a.setAttribute('data-size', size);
-            a.className      = 'link-upload '+Class;
+            a.className    = 'link-upload '+Class;
             a.appendChild(text);
             
             /* return node */
