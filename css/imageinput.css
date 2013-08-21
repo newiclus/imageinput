@@ -2,7 +2,9 @@
     margin: 20px auto 0;
     width: 800px; }
 
-.imageinput {display: none;}
+.imageinput {
+    display: none !important; 
+    visibility: hidden; }
 
 .msgError, .img-preview {display: none;}
 

@@ -51,23 +51,13 @@ All parameters stored in a input.
 | ------------- |:----------:| -------------------------------- | :--------:|
 | `data-height` | integer    | *desired image height in pixels* | 180px     |
 | `data-width`  | integer    | *desired image width in pixels*  | 180px     |
-| `data-thumbnail-height` | integer | `optional` *Thumnail height in pixels If value is empty or the parameter does not exist, no thumnail will be created. If activated, a new hidden input name "thumb-[name-of-your-imageinput]" will be added to your form with the thumnail path as a value* | " " |
+| `data-thumbnail-height` | integer | `optional` *Thumbnail height in pixels If value is empty or the parameter does not exist, no thumbnail will be created. If activated, a new hidden input name "thumb-[name-of-your-imageinput]" will be added to your form with the thumnail path as a value* | " " |
 | `data-preview-height` | integer    | `optional` *preview height in pixels, if you want to show a preview in your form with a different size than the original image (width will be calculated proportionnaly)* | `data-height` |
 | `data-path`  | string   | `optional` *Desired subfolders in the public directory (see install) to upload your image*  | "/"   |
 | `data-name`  | string    | `optional` *Final name of the uploaded image, "auto" will generate an unique name* | "auto" |
-| `data-sizerule`  | string    | `optional` 
-
-+ ``strict : Forbid uploaded images with a different size than the parameters *data-height* and data-width`` | "free" |
+| `data-sizerule`  | string    | `optional`<br> **strict** : *Forbid uploaded images with a different size than the parameters data-height and data-width*<br><br> **proportion** : *Allow only images with the same proportion than the parameters*<br><br> **free** : *Allow anything* | "free" |
 
 
-
-**data-sizerule** : _(optional, default : "free")_ 
-
-```strict : Forbid uploaded images with a different size than the parameters data-height and data-width ```
-
-```proportion : Allow only images with the same proportion than the parameters```
-
-```free : Allow anything```
 
 **data-formats** : _(optional, default : "all")_ 
 
