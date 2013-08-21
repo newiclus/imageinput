@@ -40,6 +40,7 @@ class Images
 			return $validate;
 
 		if(!($coyping=$this->store()))
+		if($coyping!=1)	
 		return $copying;
 
 
@@ -169,7 +170,7 @@ class Images
         {	
 
         	if(!copy($this->opt['file_temp'], $this->opt['dest']))
-        		return "copying error";
+        		return "copying error : ".$this->opt['dest'];
         	
         	return TRUE;
 
