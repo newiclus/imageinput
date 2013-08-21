@@ -23,7 +23,7 @@ $msg=$image->upload('file',$options);
 
 
 if(($msg==1))
-	$json=array('status'=>'success','file'=>'http://'.$path."/".$image->file(),'file-rel'=>$image->file(),'preview'=>$image->file_preview());
+	$json=array('status'=>'success','file'=>'http://'.$path."/".$image->file(),'file_rel'=>$image->file(),'preview'=>$image->file_preview());
 else
 	$json=array('status'=>'error','msg'=>$msg);
 

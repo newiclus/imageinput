@@ -17,6 +17,7 @@
         iframe = document.createElement('iframe'),   /* Wrapper forms */
         form  = document.createElement('form'),   /* forms */
         file  = document.createElement('input'),   /* Create Input File */
+        hidd  = document.createElement('input'),   /* Create Input File */
         text  = document.createElement('p'),   /* Create P tagNode */
         msg   = document.createElement('p'),   /* Create P tagNode */        
         a     = document.createElement('a');
@@ -30,6 +31,8 @@
             /*  Node File Attributes */
             file.setAttribute('type', 'file');
             file.setAttribute('name', 'file');
+            hidd.setAttribute('type', 'hidden');
+            hidd.setAttribute('name', 'imgUpload');
 
             /* Node form Attributes */
             form.setAttribute('enctype', 'multipart/form-data');
@@ -38,8 +41,9 @@
             
             /* Asign ClassName */             
             file.className   = 'input-file';
+            hidd.className   = 'img-hidden';
             text.className   = 'text-upload';
-            msg.className    = 'msgError';    
+            msg.className    = 'msgError';
             iframe.className = 'iframe-upload';        
 
             /* Div wrapper for form and iframe */
@@ -259,6 +263,7 @@
             a.setAttribute('data-size', size);
             a.className    = 'link-upload '+Class;
             a.appendChild(text);
+            a.appendChild(hidd);
             
             /* return node */
             return a.cloneNode(true);
@@ -359,6 +364,7 @@ function callbackInput ( id ) {
 
     var p   = blockParent.querySelector('.msgError');       
     var delImg = block.querySelector('.img-preview');
+    var input = block.querySelector('.img-hidden');
 
     if ( delImg !== null )
         delImg.parentNode.removeChild(delImg);
@@ -367,6 +373,7 @@ function callbackInput ( id ) {
     if ( responseText.status === 'success' ) {
         p.style.display = 'none';
         block.firstChild.style.display = "none";
+        input.setAttribute('value', responseText.file_rel);
 
         var img  = document.createElement('img');
             img.className = 'img-preview';
