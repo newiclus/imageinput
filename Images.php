@@ -85,15 +85,14 @@ class Images
         elseif($this->opt['sizerule'] == 'fit')
         {
         	if( $this->opt['img_w']/$this->opt['img_h'] > $this->opt['width']/$this->opt['height'] )
-        	{
+        	
         		$height_dest=$this->opt['width']*($this->opt['img_h']/$this->opt['img_w']);
-				$coyping=$this->reduce($height_dest,"","dest");
-        	} 
+
         	else 
-        	{
+        	
         		$height_dest=$this->opt['height'];
- 				$coyping=$this->reduce($height_dest,"","dest");
-        	}
+        	
+			$coyping=$this->reduce($height_dest,"","dest");
 
 			if($coyping!=1)
 				return $copying;
@@ -102,15 +101,14 @@ class Images
         elseif($this->opt['sizerule'] == 'overflow')
         {
         	if( $this->opt['img_w']/$this->opt['img_h'] > $this->opt['width']/$this->opt['height'] )
-        	{
+        	
         		$height_dest=$this->opt['height'];
-				$coyping=$this->reduce($height_dest,"","dest");
-        	} 
+        	 
         	else 
-        	{
+        	
         		$height_dest=$this->opt['width']*($this->opt['img_h']/$this->opt['img_w']);
-				$coyping=$this->reduce($height_dest,"","dest");
-        	}
+        	
+			$coyping=$this->reduce($height_dest,"","dest");
 
 			if($coyping!=1)
 				return $copying;
@@ -123,18 +121,21 @@ class Images
         		$height_dest=$this->opt['height'];
 				$coyping=$this->reduce($height_dest,"","dest");
 
-				$coyping=$this->reduce($this->opt['height'],"","dest",TRUE,$this->opt['width']);
+				$this->opt['img_w']=$height_dest*($this->opt['img_w']/$this->opt['img_h']);
+				$this->opt['img_h']=$height_dest;
+
         	} 
         	else 
         	{
         		$height_dest=$this->opt['width']*($this->opt['img_h']/$this->opt['img_w']);
 				$coyping=$this->reduce($height_dest,"","dest");
 
-				$this->opt['img_h']=$height_dest;
 				$this->opt['img_w']=$this->opt['width'];
+				$this->opt['img_h']=$height_dest;
 
-				$coyping=$this->reduce($this->opt['height'],"","dest",TRUE,$this->opt['width']);
         	}
+
+			$coyping=$this->reduce($this->opt['height'],"","dest",TRUE,$this->opt['width']);
 
 			if($coyping!=1)
 				return $copying;
@@ -198,7 +199,7 @@ class Images
 				$miniature = ImageCreateTrueColor($width, $height);
 
 				if($crop)
-					imagecopyresampled($miniature,$img,0 -($this->opt['img_w']-$width)/2 ,0 -($this->opt['img_h']-$height)/2,0,0,$width,$this->opt['img_h'],$this->opt['img_w'],$this->opt['img_h']);
+					imagecopyresampled($miniature,$img,0 -($this->opt['img_w']-$width)/2 ,0 -($this->opt['img_h']-$height)/2,0,0,$this->opt['img_w'],$this->opt['img_h'],$this->opt['img_w'],$this->opt['img_h']);
 				else
 					imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 
@@ -212,7 +213,7 @@ class Images
 				$miniature = ImageCreateTrueColor($width, $height);
 
 				if($crop)
-					imagecopyresampled($miniature,$img,0 -($this->opt['img_w']-$width)/2 ,0 -($this->opt['img_h']-$height)/2,0,0,$width,$this->opt['img_h'],$this->opt['img_w'],$this->opt['img_h']);
+					imagecopyresampled($miniature,$img,0 -($this->opt['img_w']-$width)/2 ,0 -($this->opt['img_h']-$height)/2,0,0,$this->opt['img_w'],$this->opt['img_h'],$this->opt['img_w'],$this->opt['img_h']);
 				else
 					imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 
@@ -231,7 +232,7 @@ class Images
 				imagesavealpha($miniature, true);
 
 				if($crop)
-					imagecopyresampled($miniature,$img,0 -($this->opt['img_w']-$width)/2 ,0 -($this->opt['img_h']-$height)/2,0,0,$width,$this->opt['img_h'],$this->opt['img_w'],$this->opt['img_h']);
+					imagecopyresampled($miniature,$img,0 -($this->opt['img_w']-$width)/2 ,0 -($this->opt['img_h']-$height)/2,0,0,$this->opt['img_w'],$this->opt['img_h'],$this->opt['img_w'],$this->opt['img_h']);
 				else
 					imagecopyresampled($miniature,$img,0,0,0,0,$width,$height,$this->opt['img_w'],$this->opt['img_h']);
 
