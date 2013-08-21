@@ -36,9 +36,6 @@
             max-width: 100%;
         }
 
-        .upload-item a[data-size="crop"] img {            
-        }
-
     .upload-item input { visibility: hidden; }
 
     .upload-item p {

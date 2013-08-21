@@ -46,43 +46,20 @@ Thumbnails can be generated automatically.
 ###Parameters definition
 All parameters stored in a input.
 
-data keys:
 
-
-| Name          | Type       | Description                      | Default   |
-| ------------- |:----------:| --------------------------------:| ---------:|
+| Data Keys     | Type       | Description                      | Default   |
+| ------------- |:----------:| -------------------------------- | :--------:|
 | `data-height` | integer    | *desired image height in pixels* | 180px     |
-| `data-width`  | integer    | *Desired image width in pixels*  | 180px     |
+| `data-width`  | integer    | *desired image width in pixels*  | 180px     |
+| `data-thumbnail-height` | integer | `optional` *Thumnail height in pixels If value is empty or the parameter does not exist, no thumnail will be created. If activated, a new hidden input name "thumb-[name-of-your-imageinput]" will be added to your form with the thumnail path as a value* | " " |
+| `data-preview-height` | integer    | `optional` *preview height in pixels, if you want to show a preview in your form with a different size than the original image (width will be calculated proportionnaly)* | `data-height` |
+| `data-path`  | string   | `optional` *Desired subfolders in the public directory (see install) to upload your image*  | "/"   |
+| `data-name`  | string    | `optional` *Final name of the uploaded image, "auto" will generate an unique name* | "auto" |
+| `data-sizerule`  | string    | `optional` 
+
++ ``strict : Forbid uploaded images with a different size than the parameters *data-height* and data-width`` | "free" |
 
 
-**data-thumbnail-height** : _(optional, default : "")_ 
-
-```Thumnail height in pixels```
-
-```If value is empty or the parameter does not exist, no thumnail will be created```
-
-```If activated, a new hidden input name "thumb-[name-of-your-imageinput]" will be added to your form with the thumnail path as a value```
-
-``` html 
-Example : 
-<input type="button" class="imageinput" name="myimgfield" .../> <!-- you set this in your html -->
-<input type="hidden" name="thumb-myimgfield" value="..."/> <!-- input added after a successfull upload -->
-
-```
-
-**data-preview-height** : _(optional, default : "data-height value")_ 
-
-```Preview height in pixels, if you want to show a preview in your form with a different size than the original image ```
-
-```(width will be calculated proportionnaly)```
-
-**data-path** : _(optional, default : "/")_ 
-
-```Desired subfolders in the public directory (see install) to upload your image```
-
-**data-name** : _(optional, default : "auto")_ 
-
-```Final name of the uploaded image, "auto" will generate an unique name```
 
 **data-sizerule** : _(optional, default : "free")_ 
 
