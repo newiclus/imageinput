@@ -52,14 +52,9 @@ data keys:
 | Name          | Type       | Description                      | Default   |
 | ------------- |:----------:| --------------------------------:| ---------:|
 | `data-height` | integer    | *desired image height in pixels* | 180px     |
-| `data-width`  | integer    | *Desired image width in pixels*  | 180px     |
+| `data-width`  | integer    | *desired image width in pixels*  | 180px     |
+| `data-thumbnail-heigh` | integer | `optional` *Thumnail height in pixels If value is empty or the parameter does not exist, no thumnail will be created* | "" |
 
-
-**data-thumbnail-height** : _(optional, default : "")_ 
-
-```Thumnail height in pixels```
-
-```If value is empty or the parameter does not exist, no thumnail will be created```
 
 ```If activated, a new hidden input name "thumb-[name-of-your-imageinput]" will be added to your form with the thumnail path as a value```
 
