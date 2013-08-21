@@ -57,13 +57,7 @@ data keys:
 | `data-preview-height` | integer    | `optional` *preview height in pixels, if you want to show a preview in your form with a different size than the original image (width will be calculated proportionnaly)* | `data-height` |
 | `data-path`  | string   | `optional` *Desired subfolders in the public directory (see install) to upload your image*  | "/"   |
 | `data-name`  | string    | `optional` *Final name of the uploaded image, "auto" will generate an unique name* | "auto" |
-| `data-sizerule`  | string    | `optional` + ```strict``` : *Forbid uploaded images with a different size than the parameters data-height and data-width*   | "free" |
-
-
-``` html 
-Example : 
-<input type="button" class="imageinput" name="myimgfield" .../> <!-- you set this in your html -->
-<input type="hidden" name="thumb-myimgfield" value="..."/> <!-- input added after a successfull upload -->
+| `data-sizerule`  | string    | `optional` ``strict : Forbid uploaded images with a different size than the parameters *data-height* and data-width`` | "free" |
 
 
 
