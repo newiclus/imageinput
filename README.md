@@ -46,10 +46,8 @@ Thumbnails can be generated automatically.
 ###Parameters definition
 All parameters stored in a input.
 
-data keys:
 
-
-| Name          | Type       | Description                      | Default   |
+| Data Keys     | Type       | Description                      | Default   |
 | ------------- |:----------:| -------------------------------- | :--------:|
 | `data-height` | integer    | *desired image height in pixels* | 180px     |
 | `data-width`  | integer    | *desired image width in pixels*  | 180px     |
@@ -57,7 +55,9 @@ data keys:
 | `data-preview-height` | integer    | `optional` *preview height in pixels, if you want to show a preview in your form with a different size than the original image (width will be calculated proportionnaly)* | `data-height` |
 | `data-path`  | string   | `optional` *Desired subfolders in the public directory (see install) to upload your image*  | "/"   |
 | `data-name`  | string    | `optional` *Final name of the uploaded image, "auto" will generate an unique name* | "auto" |
-| `data-sizerule`  | string    | `optional` ``strict : Forbid uploaded images with a different size than the parameters *data-height* and data-width`` | "free" |
+| `data-sizerule`  | string    | `optional` 
+
++ ``strict : Forbid uploaded images with a different size than the parameters *data-height* and data-width`` | "free" |
 
 
 
