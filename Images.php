@@ -169,7 +169,7 @@ class Images
         if (is_uploaded_file($this->opt['file_temp']))
         {	
 
-        	if(!copy($this->opt['file_temp'], $this->opt['dest']))
+        	if(!@copy($this->opt['file_temp'], $this->opt['dest']))
         		return "copying error : ".$this->opt['dest'];
         	
         	return TRUE;
