@@ -2,21 +2,22 @@
 
 require("Images.php");
 
-$options['width']			=$_POST['width'];
-$options['height']			=$_POST['height'];
-$options['thumbnail_height']=(isset($_POST['thumbnail-height']))?$_POST['thumbnail-height']:'';
-$options['preview_height']	=(isset($_POST['preview-height']))?$_POST['preview-height']:$_POST['height'];
-$options['path']			=$_POST['path'];
-$options['name']			=$_POST['name'];
-$options['sizerule']		=(isset($_POST['sizerule']))?$_POST['sizerule']:'free';
-$options['formats']			=(isset($_POST['formats']))?$_POST['formats']:'all';
-
+$options=array(
+	'path'				=>	$_POST['path'],
+	'name'				=>	$_POST['name'],	
+	'width'				=>	$_POST['width'],
+	'height'			=>	$_POST['height'],	
+	'thumbnail_height'	=>	(isset($_POST['thumbnail-height']))?$_POST['thumbnail-height']:'',
+	'preview_height'	=>	(isset($_POST['preview-height']))?$_POST['preview-height']:$_POST['height'],
+	'sizerule'			=>	(isset($_POST['sizerule']))?$_POST['sizerule']:'free',
+	'formats'			=>	(isset($_POST['formats']))?$_POST['formats']:'all'
+);
 
 $image= new Images();
 $msg=$image->upload('file',$options);
 
 if(($msg==1))
-	$json=array('status'=>'success','file'=>$image->file(),'preview'=>$image->file_preview());
+	$json=array('status'=>'success','file'=>'http://'.$_SERVER['HTTP_HOST']."/".$image->file(),'file-rel'=>$image->file(),'preview'=>$image->file_preview());
 else
 	$json=array('status'=>'error','msg'=>$msg);
 
