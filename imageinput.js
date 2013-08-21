@@ -114,12 +114,11 @@
 
         /*  Default options  */
         options : {
-            image_dir  : 'www/public',   // absolute path to the directory
             upload_msg : 'Click to Upload',
             img_width  : 180,
             img_height : 180,            
             img_name   : "auto",
-            img_path   : "/",
+            img_path   : "www/public",
             img_rule   : "free",
             img_format : "jpg,png,gif",
             img_class  : "",
@@ -193,7 +192,7 @@
                 break;
 
                 case 'data-path':
-                    return check('image_dir');
+                    return check('img_path');
                 break;
 
                 case 'data-name':
