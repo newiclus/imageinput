@@ -17,7 +17,7 @@ $image= new Images();
 $msg=$image->upload('file',$options);
 
 if(($msg==1))
-	$json=array('status'=>'success','file'=>'http://'.$_SERVER['HTTP_HOST']."/".$image->file(),'preview'=>$image->file_preview());
+	$json=array('status'=>'success','file'=>'http://'.$_SERVER['HTTP_HOST']."/".$image->file(),'file-rel'=>$image->file(),'preview'=>$image->file_preview());
 else
 	$json=array('status'=>'error','msg'=>$msg);
 
