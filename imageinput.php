@@ -1,4 +1,8 @@
 <?php 
+$dirs=explode("/",$_SERVER['SCRIPT_NAME']);
+unset($dirs[sizeof($dirs)-1]);
+// var_dump($dirs);
+$path=$_SERVER['HTTP_HOST'].implode("/",$dirs);
 
 require("Images.php");
 
@@ -16,8 +20,10 @@ $options=array(
 $image= new Images();
 $msg=$image->upload('file',$options);
 
+
+
 if(($msg==1))
-	$json=array('status'=>'success','file'=>'http://'.$_SERVER['HTTP_HOST']."/".$image->file(),'file-rel'=>$image->file(),'preview'=>$image->file_preview());
+	$json=array('status'=>'success','file'=>'http://'.$path."/".$image->file(),'file-rel'=>$image->file(),'preview'=>$image->file_preview());
 else
 	$json=array('status'=>'error','msg'=>$msg);
 
