@@ -23,17 +23,17 @@ class Images
 		$this->opt['extension']    = strtolower($ext[sizeof($ext)-1]);
 
 		//name
-		$this->opt['name'] = ($this->opt['name']=='auto')?$_FILES[$name]['name']:$this->opt['name'];
+		$this->opt['file'] = ($this->opt['file']=='auto')?$_FILES[$name]['name']:$this->opt['file'];
 
-		if(substr($this->opt['name'],-4,4)!=".".$this->opt['extension'])
-			$this->opt['name']=$this->opt['name'].".".$this->opt['extension'];
+		if(substr($this->opt['file'],-4,4)!=".".$this->opt['extension'])
+			$this->opt['file']=$this->opt['file'].".".$this->opt['extension'];
 
 		//fixing extention
 		$this->opt['path'] = str_replace("//","/",$this->opt['path']."/");
 		$this->opt['path'] = ($this->opt['path']=="/")?"":$this->opt['path'];
 
 		//get file dest
-    	$this->opt['dest'] =$this->opt['path'].$this->opt['name'];
+    	$this->opt['dest'] =$this->opt['path'].$this->opt['file'];
 
     	$validate=$this->validate();
 		if($validate!=1)
