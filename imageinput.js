@@ -340,7 +340,6 @@
             referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
         },
 
-
         /* Check image file extension */
         checkFileImage : function () {
             
@@ -395,8 +394,6 @@ function callbackInput ( id ) {
 
         image.src = responseText.file;
         image.style.display = 'inline';
-        
-        block.appendChild(img);            
 
     } else {        
         block.firstChild.style.display = "block";
