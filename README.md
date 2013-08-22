@@ -36,10 +36,11 @@ Thumbnails can be generated automatically.
       data-preview-height="150"
       data-path="path-on-your-webserver"
       data-filename="auto|fixed_name"
-      data-sizerule="strict|proportion|free|crop|overflow|fixedwidth"
+      data-sizerule="strict|proportion|free|crop|overflow|fit"
       data-formats="all|jpg,png,gif"
       data-text="message"
       data-class="className"
+      data-default="src_your_image_default"
 />
 ```
 
@@ -50,26 +51,19 @@ All parameters stored in a input.
 
 | Data Keys     | Type       | Description                      | Default   |
 | ------------- |:----------:| -------------------------------- | :--------:|
-| `data-name`   | integer    | *name's input image to submit form*  | -  |
+| `data-name`   | string     | *set name of input image for submit form*  | |
 | `data-height` | integer    | *desired image height in pixels* | 180px     |
 | `data-width`  | integer    | *desired image width in pixels*  | 180px     |
-| `data-thumbnail-height` | integer | `optional` *Thumbnail height in pixels If value is empty or the parameter does not exist, no thumbnail will be created. If activated, a new hidden input name "thumb-[name-of-your-imageinput]" will be added to your form with the thumnail path as a value* |  |
+| `data-thumbnail-height` | integer | `optional` *Thumbnail height in pixels If value is empty or the parameter does not exist, no thumbnail will be created. If activated, a new hidden input name "thumb-[name-of-your-imageinput]" will be added to your form with the thumnail path as a value* | " " |
 | `data-preview-height` | integer    | `optional` *preview height in pixels, if you want to show a preview in your form with a different size than the original image (width will be calculated proportionnaly)* | `data-height` |
 | `data-path`  | string   | `optional` *Desired subfolders in the public directory (see install) to upload your image*  | "www/public"   |
 | `data-filename`  | string    | `optional` *Final name of the uploaded image, "auto" will generate an unique name* | "auto" |
-| `data-sizerule`  | string    | `optional`<br> **strict** : *Forbid uploaded images with a different size than the parameters data-height and data-width*<br><br> **proportion** : *Allow only images with the same proportion than the parameters*<br><br> **free** : *Allow anything* | "free" |
+| `data-sizerule`  | string    | `optional`<br> **strict** : *Forbid uploaded images with a different size than the parameters data-height and data-width*<br><br> **proportion** : *Allow only images with the same proportion than the parameters*<br><br> **fit** : *Allow anything* <br><br> **crop** : *Allow anything*<br><br> **overflow** : *Allow anything*  <br><br> **free** : *Allow anything* | "free" |
+| `data-formats`  | string    | `optional` *desired image format extend upload*<br><br>**jpg,png,gif** :  *Allow only image of certain format separeted by commas*<br><br>**all** : <small>*Allow every format*</small>  | "all" |
+| `data-text`  | string    | `optional` *if set, override the default text displayed in the bottom*  | "Upload Image" |
+| `data-class`  | string    | `optional` *customize a class name for input image*  |  |
+| `data-default`  | string    | `optional` *source the your image default fot image input*  |  |
 
-
-
-**data-formats** : _(optional, default : "all")_ 
-
-```jpg,png,gif : Allow only image of certain format separeted by commas```
-
-```all : Allow every format```
-
-**data-text** : _(optional, default : "")_ 
-
-```if set, override the default text displayed in the bottom```
 
 ## What it looks like ##
 

@@ -17,7 +17,8 @@
         iframe = document.createElement('iframe'),   /* Wrapper forms */
         form  = document.createElement('form'),   /* forms */
         file  = document.createElement('input'),   /* Create Input File */
-        hidd  = document.createElement('input'),   /* Create Input File */
+        hidd  = document.createElement('input'),   /* Create Input Hidden */
+        img   = document.createElement('img'),   /* Create Image */
         text  = document.createElement('p'),   /* Create P tagNode */
         msg   = document.createElement('p'),   /* Create P tagNode */        
         a     = document.createElement('a');
@@ -42,6 +43,7 @@
             file.className   = 'input-file';
             hidd.className   = 'img-hidden';
             text.className   = 'text-upload';
+            img.className    = 'img-preview';
             msg.className    = 'msgError';
             iframe.className = 'iframe-upload';        
 
@@ -125,6 +127,7 @@
             img_rule   : "free",
             img_format : "jpg,png,gif",
             img_class  : "",
+            img_default: "",
             input_name : "",
             thumbnail_height : "",
             preview_height   : 180,
@@ -241,6 +244,10 @@
                     return check('input_name');
                 break;
 
+                case 'data-default':
+                    return check('img_default');
+                break;
+
                 case 'data-class':
                     return check('img_class');
                 break;
@@ -255,6 +262,7 @@
                 height = imageInput.validator(node, 'data-height'),
                 texto  = imageInput.validator(node, 'data-text'),
                 size   = imageInput.validator(node, 'data-sizerule'),
+                imgDefault = imageInput.validator(node, 'data-default'),
                 name   = imageInput.validator(node, 'data-name'),
                 Class  = imageInput.validator(node, 'data-class');
 
@@ -264,15 +272,18 @@
             else
                 text.innerHTML = '<cite> "data-name" is undefined </cite>';
 
+            hidd.setAttribute('name', name);
+            img.src = imgDefault;
 
             a.style.width  = width +'px';
             a.style.height = height +'px';
             a.style.lineHeight = height +'px';
             a.setAttribute('data-target', 'frame-'+id);
-            a.setAttribute('data-size', size);
-            hidd.setAttribute('name', name);
+            a.setAttribute('data-size', size);            
             a.className    = 'link-upload '+Class;
+
             a.appendChild(text);
+            a.appendChild(img);
             a.appendChild(hidd);
             
             /* return node */
@@ -372,12 +383,9 @@ function callbackInput ( id ) {
         block   = document.getElementById(blockId).querySelector(".link-upload"),
         blockParent = document.getElementById(blockId);            
 
-    var p   = blockParent.querySelector('.msgError');       
-    var delImg = block.querySelector('.img-preview');
+    var p     = blockParent.querySelector('.msgError');       
+    var image = block.querySelector('.img-preview');
     var input = block.querySelector('.img-hidden');
-
-    if ( delImg !== null )
-        delImg.parentNode.removeChild(delImg);
 
 
     if ( responseText.status === 'success' ) {
@@ -385,15 +393,14 @@ function callbackInput ( id ) {
         block.firstChild.style.display = "none";
         input.setAttribute('value', responseText.file_rel);
 
-        var img  = document.createElement('img');
-            img.className = 'img-preview';
-            img.src = responseText.file;
-            img.style.display = 'inline';
+        image.src = responseText.file;
+        image.style.display = 'inline';
         
         block.appendChild(img);            
 
     } else {        
         block.firstChild.style.display = "block";
+        image.style.display = 'none';
 
         p.innerHTML = responseText.msg;
         p.style.display = 'block';
