@@ -29,12 +29,12 @@ Thumbnails can be generated automatically.
 
 ``` html
 <input type="button" class="imageinput" name="myimgfield"
+      data-name="input_image_1"
       data-height="800"
       data-width="1200"
       data-thumbnail-height="100"
       data-preview-height="150"
       data-path="path-on-your-webserver"
-      data-name="var_image"
       data-filename="auto|fixed_name"
       data-sizerule="strict|proportion|free|crop|overflow|fixedwidth"
       data-formats="all|jpg,png,gif"
