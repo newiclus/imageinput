@@ -259,7 +259,11 @@
                 Class  = imageInput.validator(node, 'data-class');
 
             /* Create Block */
-            text.innerHTML = '<span>'+ width +' x '+ height +'</span> <br> <cite>'+ texto +'</cite>';
+            if ( name !== '' )
+                text.innerHTML = '<span>'+ width +' x '+ height +'</span> <br> <cite>'+ texto +'</cite>';
+            else
+                text.innerHTML = '<cite> "data-name" is undefined </cite>';
+
 
             a.style.width  = width +'px';
             a.style.height = height +'px';
