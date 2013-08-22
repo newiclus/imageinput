@@ -8,6 +8,7 @@ require("Images.php");
 
 $options=array(
 	'path'				=>	$_POST['path'],
+	'file'				=>	$_POST['file'],	
 	'name'				=>	$_POST['name'],	
 	'width'				=>	$_POST['width'],
 	'height'			=>	$_POST['height'],	
