@@ -34,7 +34,8 @@ Thumbnails can be generated automatically.
       data-thumbnail-height="100"
       data-preview-height="150"
       data-path="path-on-your-webserver"
-      data-name="auto|fixed_name"
+      data-name="var_image"
+      data-filename="auto|fixed_name"
       data-sizerule="strict|proportion|free|crop|overflow|fixedwidth"
       data-formats="all|jpg,png,gif"
       data-text="message"
@@ -49,12 +50,13 @@ All parameters stored in a input.
 
 | Data Keys     | Type       | Description                      | Default   |
 | ------------- |:----------:| -------------------------------- | :--------:|
+| `data-name`   | integer    | *name's input image to submit form*  | -  |
 | `data-height` | integer    | *desired image height in pixels* | 180px     |
 | `data-width`  | integer    | *desired image width in pixels*  | 180px     |
-| `data-thumbnail-height` | integer | `optional` *Thumbnail height in pixels If value is empty or the parameter does not exist, no thumbnail will be created. If activated, a new hidden input name "thumb-[name-of-your-imageinput]" will be added to your form with the thumnail path as a value* | " " |
+| `data-thumbnail-height` | integer | `optional` *Thumbnail height in pixels If value is empty or the parameter does not exist, no thumbnail will be created. If activated, a new hidden input name "thumb-[name-of-your-imageinput]" will be added to your form with the thumnail path as a value* |  |
 | `data-preview-height` | integer    | `optional` *preview height in pixels, if you want to show a preview in your form with a different size than the original image (width will be calculated proportionnaly)* | `data-height` |
-| `data-path`  | string   | `optional` *Desired subfolders in the public directory (see install) to upload your image*  | "/"   |
-| `data-name`  | string    | `optional` *Final name of the uploaded image, "auto" will generate an unique name* | "auto" |
+| `data-path`  | string   | `optional` *Desired subfolders in the public directory (see install) to upload your image*  | "www/public"   |
+| `data-filename`  | string    | `optional` *Final name of the uploaded image, "auto" will generate an unique name* | "auto" |
 | `data-sizerule`  | string    | `optional`<br> **strict** : *Forbid uploaded images with a different size than the parameters data-height and data-width*<br><br> **proportion** : *Allow only images with the same proportion than the parameters*<br><br> **free** : *Allow anything* | "free" |
 
 

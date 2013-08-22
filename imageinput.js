@@ -32,7 +32,6 @@
             file.setAttribute('type', 'file');
             file.setAttribute('name', 'file');
             hidd.setAttribute('type', 'hidden');
-            hidd.setAttribute('name', 'imgUpload');
 
             /* Node form Attributes */
             form.setAttribute('enctype', 'multipart/form-data');
@@ -121,11 +120,12 @@
             upload_msg : 'Click to Upload',
             img_width  : 180,
             img_height : 180,            
-            img_name   : "auto",
+            img_filename   : "auto",
             img_path   : "www/public",
             img_rule   : "free",
             img_format : "jpg,png,gif",
             img_class  : "",
+            input_name : "",
             thumbnail_height : "",
             preview_height   : 180,
             php_path   : 'imageinput.php'
@@ -199,8 +199,8 @@
                     return check('img_path');
                 break;
 
-                case 'data-name':
-                    return check('img_name');
+                case 'data-filename':
+                    return check('img_filename');
                 break;
 
                 case 'data-sizerule':
@@ -237,6 +237,10 @@
                     return check('upload_msg');
                 break;
 
+                case 'data-name':
+                    return check('input_name');
+                break;
+
                 case 'data-class':
                     return check('img_class');
                 break;
@@ -251,6 +255,7 @@
                 height = imageInput.validator(node, 'data-height'),
                 texto  = imageInput.validator(node, 'data-text'),
                 size   = imageInput.validator(node, 'data-sizerule'),
+                name   = imageInput.validator(node, 'data-name'),
                 Class  = imageInput.validator(node, 'data-class');
 
             /* Create Block */
@@ -261,6 +266,7 @@
             a.style.lineHeight = height +'px';
             a.setAttribute('data-target', 'frame-'+id);
             a.setAttribute('data-size', size);
+            hidd.setAttribute('name', name);
             a.className    = 'link-upload '+Class;
             a.appendChild(text);
             a.appendChild(hidd);
@@ -280,7 +286,7 @@
                         <input type="hidden" name="preview-height" value="'+ imageInput.validator(node, 'data-preview-height') +'">\
                         <input type="hidden" name="path" value="'+ imageInput.validator(node, 'data-path') +'">\
                         <input type="hidden" name="formats" value="'+ format +'">\
-                        <input type="hidden" name="name" value="'+ imageInput.validator(node, 'data-name') +'">\
+                        <input type="hidden" name="filename" value="'+ imageInput.validator(node, 'data-filename') +'">\
                         <input type="hidden" name="sizerule" value="'+ imageInput.validator(node, 'data-sizerule') +'">';
 
 
