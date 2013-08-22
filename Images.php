@@ -39,30 +39,30 @@ class Images
 		if($validate!=1)
 			return $validate;
 
-		if(!($coyping=$this->store()))
-		if($coyping!=1)	
-		return $copying;
+		$copying=$this->store();
+		if($copying!=1)
+			return $copying;
 
 
 		if(!empty($this->opt['thumbnail_height']))
 		{
-			$coyping=$this->reduce($this->opt['thumbnail_height'],"_thumbnail","thumbnail");
-			if($coyping!=1)
+			$copying=$this->reduce($this->opt['thumbnail_height'],"_thumbnail","thumbnail");
+			if($copying!=1)
 				return $copying;
 		}
 
 		if(!empty($this->opt['preview_height']))
 		{
-			$coyping=$this->reduce($this->opt['preview_height'],"_preview","preview");
-			if($coyping!=1)
+			$copying=$this->reduce($this->opt['preview_height'],"_preview","preview");
+			if($copying!=1)
 				return $copying;
 		}
 
 		// RESIZING
         if($this->opt['sizerule'] == 'proportion')
         {
-			$coyping=$this->reduce($this->opt['height'],"","dest");
-			if($coyping!=1)
+			$copying=$this->reduce($this->opt['height'],"","dest");
+			if($copying!=1)
 				return $copying;
 
         }
@@ -71,15 +71,15 @@ class Images
         	if( $this->opt['img_w']/$this->opt['img_h'] > $this->opt['width']/$this->opt['height'] )
         	{
         		$height_dest=$this->opt['height']*($this->opt['img_w']/$this->opt['img_h']);
-				$coyping=$this->reduce($height_dest,"","dest");
+				$copying=$this->reduce($height_dest,"","dest");
         	} 
         	else 
         	{
         		$height_dest=$this->opt['height'];
-				$coyping=$this->reduce($height_dest,"","dest");
+				$copying=$this->reduce($height_dest,"","dest");
         	}
 
-			if($coyping!=1)
+			if($copying!=1)
 				return $copying;
 
         }
@@ -93,9 +93,9 @@ class Images
         	
         		$height_dest=$this->opt['height'];
         	
-			$coyping=$this->reduce($height_dest,"","dest");
+			$copying=$this->reduce($height_dest,"","dest");
 
-			if($coyping!=1)
+			if($copying!=1)
 				return $copying;
 
         }  
@@ -109,9 +109,9 @@ class Images
         	
         		$height_dest=$this->opt['width']*($this->opt['img_h']/$this->opt['img_w']);
         	
-			$coyping=$this->reduce($height_dest,"","dest");
+			$copying=$this->reduce($height_dest,"","dest");
 
-			if($coyping!=1)
+			if($copying!=1)
 				return $copying;
 
         }  
@@ -120,7 +120,7 @@ class Images
         	if( $this->opt['img_w']/$this->opt['img_h'] > $this->opt['width']/$this->opt['height'] )
         	{
         		$height_dest=$this->opt['height'];
-				$coyping=$this->reduce($height_dest,"","dest");
+				$copying=$this->reduce($height_dest,"","dest");
 
 				$this->opt['img_w']=$height_dest*($this->opt['img_w']/$this->opt['img_h']);
 				$this->opt['img_h']=$height_dest;
@@ -129,16 +129,16 @@ class Images
         	else 
         	{
         		$height_dest=$this->opt['width']*($this->opt['img_h']/$this->opt['img_w']);
-				$coyping=$this->reduce($height_dest,"","dest");
+				$copying=$this->reduce($height_dest,"","dest");
 
 				$this->opt['img_w']=$this->opt['width'];
 				$this->opt['img_h']=$height_dest;
 
         	}
 
-			$coyping=$this->reduce($this->opt['height'],"","dest",TRUE,$this->opt['width']);
+			$copying=$this->reduce($this->opt['height'],"","dest",TRUE,$this->opt['width']);
 
-			if($coyping!=1)
+			if($copying!=1)
 				return $copying;
 
         }
@@ -169,11 +169,11 @@ class Images
         if (is_uploaded_file($this->opt['file_temp']))
         {	
         	
-        	if(!copy($this->opt['file_temp'], $this->opt['dest']))
+        	if(!@copy($this->opt['file_temp'], $this->opt['dest']))
         		return "copying error : ".$this->opt['dest'];
-        	
-        	return TRUE;
 
+        	return TRUE;
+        	
         }
 
 	}
