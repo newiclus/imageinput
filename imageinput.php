@@ -8,7 +8,7 @@ require("Images.php");
 
 $options=array(
 	'path'				=>	$_POST['path'],
-	'file'				=>	$_POST['file'],	
+	'file'				=>	(isset($_POST['file']))?$_POST['file']:'auto',
 	'name'				=>	$_POST['name'],	
 	'width'				=>	$_POST['width'],
 	'height'			=>	$_POST['height'],	
@@ -24,7 +24,7 @@ $msg=$image->upload('file',$options);
 
 
 if(($msg==1))
-	$json=array('status'=>'success','file'=>'http://'.$path."/".$image->file(),'file_rel'=>$image->file(),'preview'=>$image->file_preview());
+	$json=array('status'=>'success','file'=>'http://'.$path."/".$image->file()."?".rand(),'file_rel'=>$image->file(),'preview'=>$image->file_preview());
 else
 	$json=array('status'=>'error','msg'=>$msg);
 
