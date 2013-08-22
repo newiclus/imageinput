@@ -9,7 +9,7 @@ require("Images.php");
 $options=array(
 	'path'				=>	$_POST['path'],
 	'filename'				=>	(isset($_POST['filename']))?$_POST['filename']:'auto',
-	'name'				=>	$_POST['name'],	
+	// 'name'				=>	$_POST['name'],	
 	'width'				=>	$_POST['width'],
 	'height'			=>	$_POST['height'],	
 	'thumbnail_height'	=>	(isset($_POST['thumbnail-height']))?$_POST['thumbnail-height']:'',
